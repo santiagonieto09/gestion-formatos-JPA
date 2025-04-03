@@ -13,7 +13,7 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
 
 ## Estructura de Entidades y Relaciones
 ### Entidades Principales
-1. **FormatoA** (Clase base abstracta con herencia):
+1. **FormatoA** (Clase base con herencia):
    - Atributos: `id`, `titulo` (único), `fechaRegistro`.
    - Subclases: `FormatoPPA` y `FormatoTIA`.
    - Relaciones:
