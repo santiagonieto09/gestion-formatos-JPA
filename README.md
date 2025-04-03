@@ -58,7 +58,7 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
      ```
 
 2. **Herencia**:
-   - Estrategia elegida: `SINGLE_TABLE` con discriminador para `FormatoA`.
+   - Estrategia elegida: `JOINED` con discriminador para `FormatoA`.
 
 ---
 
