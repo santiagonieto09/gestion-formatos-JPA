@@ -95,8 +95,12 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
 ## Consideraciones Adicionales
 - **Acciones en Cascada**: `persist` y `remove` configuradas en relaciones críticas.
 - **Transacciones**: Todos los métodos públicos usan `@Transactional` con `readOnly` según corresponda.
-- **Colaboración**: Proyecto desarrollado en parejas (indicar nombres en el código).
+  
+---
 
+## Autores  
+- **Jerferson Castaño** - <jcastanoossa@unicauca.edu.co>  
+- **Santiago Nieto** - <santiagonietu@unicauca.edu.co>
 ---
 
 ## Licencia
