@@ -3,7 +3,7 @@
 ## Descripción del Proyecto
 Este proyecto tiene como objetivo implementar una aplicación para gestionar los formatos de propuestas de trabajo de grado (FormatoPP-A y FormatoTI-A) de la Facultad de Ingeniería Electrónica y Telecomunicaciones (FIET) de la Universidad del Cauca. Utiliza JPA (Java Persistence API) para definir relaciones entre entidades, acciones en cascada, transacciones y herencia.
 
-##Requisitos Previos
+## Requisitos Previos
 - Java 11 o superior.
 - Maven.
 - Base de datos configurada (MySQL, PostgreSQL, H2, etc.).
@@ -11,7 +11,7 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
 
 ---
 
-##Estructura de Entidades y Relaciones
+## Estructura de Entidades y Relaciones
 ### Entidades Principales
 1. **FormatoA** (Clase base abstracta con herencia):
    - Atributos: `id`, `titulo` (único), `fechaRegistro`.
@@ -39,13 +39,13 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
    - Atributos: `id`, `descripcion`, `fecha`.
    - `@ManyToOne` con `Docente` y `Evaluacion`.
 
-###Convenciones
+### Convenciones
 - **Nombres de tablas**: En plural (ej: `formatos_a`, `docentes`).
 - **Anotaciones**: Uso de `@Column` para detalles como unicidad (`unique = true`) y restricciones.
 
 ---
 
-##Configuración
+## Configuración
 1. **Base de Datos**:
    - Configurar `application.properties` con URL, usuario y contraseña.
    - Ejemplo para H2 (desarrollo):
@@ -62,17 +62,17 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
 
 ---
 
-##Métodos Implementados
+## Métodos Implementados
 ### 1. Crear Formato A (`crearFormatoA`)
 - **Funcionalidad**: Crea un formato (PP-A o TI-A) y asocia un estado inicial "En formulación".
 - **Cascada**: Persistencia automática de `Estado` y `Docente` (si no existe).
 - **Transacción**: `@Transactional(readOnly = false)`.
 
-###2. Crear Observación (`crearObservacion`)
+### 2. Crear Observación (`crearObservacion`)
 - **Funcionalidad**: Asocia una observación a una evaluación existente o crea una nueva evaluación sin concepto.
 - **Referencias**: Usa `getReferenceById` para obtener `Docente` y `Evaluacion`.
 
-###3. Listar Observaciones (`listarObservaciones`)
+### 3. Listar Observaciones (`listarObservaciones`)
 - **Fetch**: `EAGER` para `Evaluacion` y `Docente`.
 - **Salida**: Muestra formato A, estado, evaluación y observaciones.
 
@@ -80,13 +80,13 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
 - **Fetch**: `LAZY` para roles.
 - **Salida**: Docentes, roles, fechas de inicio y fin.
 
-###5. Consultar Formatos por Docente (`consultarFormatosPorDocente`)
+### 5. Consultar Formatos por Docente (`consultarFormatosPorDocente`)
 - **Fetch**: `EAGER` para formatos A y `LAZY` para evaluaciones.
 - **Salida**: Lista de formatos asociados al docente.
 
 ---
 
-##Ejecución y Pruebas
+## Ejecución y Pruebas
 1. **Importar Datos**:
    - Ejecutar scripts SQL o usar `data.sql` para registros iniciales (docentes, roles).
 
@@ -103,12 +103,12 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
 
 ---
 
-##Consideraciones Adicionales
+## Consideraciones Adicionales
 - **Acciones en Cascada**: `persist` y `remove` configuradas en relaciones críticas.
 - **Transacciones**: Todos los métodos públicos usan `@Transactional` con `readOnly` según corresponda.
 - **Colaboración**: Proyecto desarrollado en parejas (indicar nombres en el código).
 
 ---
 
-##Licencia
+## Licencia
 Este proyecto está bajo licencia MIT. Ver [LICENSE](LICENSE) para más detalles.
