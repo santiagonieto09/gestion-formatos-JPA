@@ -1,5 +1,6 @@
 package co.edu.unicauca.asae.ejemplo_relaciones_jpa;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -162,38 +163,49 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 		List<Evaluacion> evaluaciones = servicioBDEvaluaciones.findAll();
 		Evaluacion evaluacion = null;
 		
-		// Buscar evaluaciones asociadas al formato A
+		// Buscar la última evaluación asociada al formato A
 		for (Evaluacion e : evaluaciones) {
 			if (e.getFormatoA().getIdFormatoA().equals(formatoA.getIdFormatoA())) {
-				evaluacion = e;
-				break;
+				if (e.getConcepto().equals("Por corregir")) {
+					evaluacion = e;
+					break;
+				}
 			}
 		}
 		
-		// Si no hay evaluación, crear una nueva
+		// Si no hay evaluación o no hay una en estado "Por corregir", crear una nueva
 		if (evaluacion == null) {
 			evaluacion = new Evaluacion();
-			evaluacion.setConcepto("Por corregir");
+			evaluacion.setConcepto(""); // Sin concepto por establecer
 			evaluacion.setFechaRegistroConcepto(new Date());
 			evaluacion.setNombreCoordinador("Coordinador de Posgrados");
 			evaluacion.setFormatoA(formatoA);
 			servicioBDEvaluaciones.save(evaluacion);
 		}
 		
-		// Obtener un docente existente
+		// Obtener docentes existentes
 		List<Docente> docentes = servicioBDDocentes.findAll();
 		if (docentes.isEmpty()) {
 			System.out.println("No hay docentes disponibles. Primero debe crear un docente.");
 			return;
 		}
 		
-		Docente docente = docentes.get(0);
+		// Crear lista de IDs de docentes
+		List<Integer> idsDocentes = new ArrayList<>();
+		for (Docente docente : docentes) {
+			idsDocentes.add(docente.getIdDocente());
+		}
 		
 		// Crear la observación
 		Observacion observacion = new Observacion();
 		observacion.setObservacion("Se requiere mejorar la redacción del objetivo general");
 		observacion.setFechaRegistro(new Date());
-		observacion.setEvaluacion(evaluacion);
+		
+		// Obtener referencias usando getReferenceById
+		Evaluacion evaluacionRef = servicioBDEvaluaciones.getReferenceById(evaluacion.getIdEvaluacion());
+		
+		// Asociar la observación con la evaluación
+		observacion.setEvaluacion(evaluacionRef);
 		
 		// Guardar la observación
 		servicioBDObservaciones.save(observacion);
