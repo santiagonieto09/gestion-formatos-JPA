@@ -27,6 +27,6 @@ public class Estado {
     @Column(name = "fecha_registro_estado", nullable = false)
     private Date fechaRegistroEstado;
     @OneToOne
-    @JoinColumn(name = "idFormatoA")
+    @JoinColumn(name = "idFormatoA", nullable = false)
     private FormatoA formatoA;
 }

@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,14 +36,14 @@ public class FormatoA {
     @Column(unique = true)
     private String titulo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idDocente", nullable = false)
     private Docente docente;
 
-    @OneToOne(mappedBy = "formatoA")
+    @OneToOne(mappedBy = "formatoA", cascade = CascadeType.PERSIST)
     private Estado estado;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "formatoA")
+    @OneToMany(mappedBy = "formatoA", fetch = FetchType.EAGER)
     private List<Evaluacion> listaEvaluaciones;
 
 }

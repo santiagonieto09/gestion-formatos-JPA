@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -71,8 +70,8 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 		//crearFormatoA();
 		//crearObservacion();
 		//listarObservaciones();
-		listarMiembrosComite();
-		//consultarFormatosAPorDocente();
+		//listarMiembrosComite();
+		consultarFormatosAPorDocente();
 	}
 
 	/**
@@ -110,13 +109,13 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 		
 		// Crear un FormatoPPA
 		FormatoPPA formatoPPA = new FormatoPPA();
-		formatoPPA.setNombreDirector("Juan Pérez");
+		formatoPPA.setNombreDirector("Santiago Nieto");
 		formatoPPA.setObjetivoGeneral("Desarrollar una aplicación web para la gestión de formatos de propuestas de trabajo de grado");
 		formatoPPA.setObjetivosEspecificos("1. Diseñar la arquitectura de la aplicación\n2. Implementar la interfaz de usuario\n3. Desarrollar la lógica de negocio");
 		formatoPPA.setTitulo("Sistema de Gestión de Formatos de Propuestas de Trabajo de Grado");
 		formatoPPA.setDocente(docente);
 		formatoPPA.setNombreAsesor("María López");
-		formatoPPA.setNombreEstudiante1("Carlos Rodríguez");
+		formatoPPA.setNombreEstudiante1("Jeferson Castaño");
 		formatoPPA.setRutaCartaAceptacion("/documentos/carta_aceptacion.pdf");
 		
 		// Crear el estado inicial
@@ -124,14 +123,12 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 		estado.setEstadoActual("En formulación");
 		estado.setFechaRegistroEstado(new Date());
 		
-		// Guardar el formato primero
-		servicioBDFormatosPPA.save(formatoPPA);
-		
-		// Asociar el estado al formato
+		// Establecer la relacion bidireccional
+		formatoPPA.setEstado(estado);
 		estado.setFormatoA(formatoPPA);
 		
-		// Guardar el estado
-		servicioBDEstados.save(estado);
+		// Guardar solo el formatoPPA, la cascada persist se encarga del resto
+		servicioBDFormatosPPA.save(formatoPPA);
 		
 		System.out.println("Formato PP-A creado con éxito. ID: " + formatoPPA.getIdFormatoA());
 	}
@@ -173,7 +170,7 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 			}
 		}
 		
-		// Si no hay evaluación o no hay una en estado "Por corregir", crear una nueva
+		// Si no hay evaluacion o no hay una en estado "Por corregir", crear una nueva
 		if (evaluacion == null) {
 			evaluacion = new Evaluacion();
 			evaluacion.setConcepto(""); // Sin concepto por establecer
@@ -196,21 +193,22 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 			idsDocentes.add(docente.getIdDocente());
 		}
 		
-		// Crear la observación
+		// Crear la observacion
 		Observacion observacion = new Observacion();
 		observacion.setObservacion("Se requiere mejorar la redacción del objetivo general");
 		observacion.setFechaRegistro(new Date());
+		observacion.setIdsDocentes(idsDocentes); // Asignar la lista de IDs de docentes
 		
 		// Obtener referencias usando getReferenceById
 		Evaluacion evaluacionRef = servicioBDEvaluaciones.getReferenceById(evaluacion.getIdEvaluacion());
 		
-		// Asociar la observación con la evaluación
+		// Asociar la observacion con la evaluacion
 		observacion.setEvaluacion(evaluacionRef);
 		
-		// Guardar la observación
+		// Guardar la observacion
 		servicioBDObservaciones.save(observacion);
 		
-		System.out.println("Observación creada con éxito. ID: " + observacion.getIdObservacion());
+		System.out.println("Observacion creada con éxito. ID: " + observacion.getIdObservacion());
 	}
 
 	/**
@@ -220,7 +218,7 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 	 */
 	@Transactional(readOnly = true)
 	public void listarObservaciones() {
-		// Obtener todos los formatos A
+		// Obtener todos los formatos A con sus relaciones
 		List<FormatoA> formatosA = servicioBDFormatosA.findAll();
 		
 		if (formatosA.isEmpty()) {
@@ -245,16 +243,17 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 				System.out.println("El formato no tiene estado registrado.");
 			}
 			
-			// Obtener evaluaciones del formato A
-			List<Evaluacion> evaluaciones = servicioBDEvaluaciones.findAll();
-			for (Evaluacion evaluacion : evaluaciones) {
-				if (evaluacion.getFormatoA().getIdFormatoA().equals(formatoA.getIdFormatoA())) {
+			// Obtener evaluaciones directamente del formato A
+			List<Evaluacion> evaluaciones = formatoA.getListaEvaluaciones();
+			if (evaluaciones != null && !evaluaciones.isEmpty()) {
+				for (Evaluacion evaluacion : evaluaciones) {
 					System.out.println("=== EVALUACIÓN ===");
 					System.out.println("ID: " + evaluacion.getIdEvaluacion());
 					System.out.println("Concepto: " + evaluacion.getConcepto());
 					System.out.println("Fecha registro: " + evaluacion.getFechaRegistroConcepto());
+					System.out.println("Coordinador: " + evaluacion.getNombreCoordinador());
 					
-					// Mostrar observaciones de la evaluación
+					// Mostrar observaciones de la evaluacion
 					List<Observacion> observaciones = evaluacion.getListaObservaciones();
 					if (observaciones != null && !observaciones.isEmpty()) {
 						System.out.println("=== OBSERVACIONES ===");
@@ -262,13 +261,23 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 							System.out.println("ID: " + observacion.getIdObservacion());
 							System.out.println("Observación: " + observacion.getObservacion());
 							System.out.println("Fecha registro: " + observacion.getFechaRegistro());
+							
+							// Mostrar docentes que plantearon la observacion
+							List<Integer> idsDocentes = observacion.getIdsDocentes();
+							if (idsDocentes != null && !idsDocentes.isEmpty()) {
+								System.out.println("Docentes que plantearon la observación:");
+								for (Integer idDocente : idsDocentes) {
+									Docente docente = servicioBDDocentes.getReferenceById(idDocente);
+									System.out.println("- " + docente.getNombreDocente() + " " + docente.getApellidosDocente());
+								}
+							}
 						}
 					} else {
 						System.out.println("La evaluación no tiene observaciones.");
 					}
-					
-					break;
 				}
+			} else {
+				System.out.println("El formato no tiene evaluaciones registradas.");
 			}
 			
 			System.out.println("=====================");
@@ -281,7 +290,7 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 	 */
 	@Transactional(readOnly = true)
 	public void listarMiembrosComite() {
-		// Obtener todos los históricos
+		// Obtener todos los historicos
 		List<Historico> historicos = servicioBDHistoricos.findAll();
 		
 		if (historicos.isEmpty()) {
@@ -289,7 +298,7 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 			return;
 		}
 		
-		// Mostrar información de cada miembro del comité
+		// Mostrar informacion de cada miembro del comite
 		for (Historico historico : historicos) {
 			Docente docente = historico.getDocente();
 			Rol rol = historico.getRol();
@@ -302,9 +311,8 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 			if (historico.getFechaFin() != null) {
 				System.out.println("Fecha fin: " + historico.getFechaFin());
 			} else {
-				System.out.println("Actualmente activo");
+				System.out.println("Fecha fin: Sin fecha de fin registrada");
 			}
-			
 			System.out.println("=====================");
 		}
 	}
@@ -337,42 +345,34 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 			for (FormatoA formatoA : formatosA) {
 				if (formatoA.getDocente().getIdDocente().equals(docente.getIdDocente())) {
 					tieneFormatos = true;
-					System.out.println("=== FORMATO A ===");
+					System.out.println("\n=== FORMATO A ===");
 					System.out.println("ID: " + formatoA.getIdFormatoA());
 					System.out.println("Título: " + formatoA.getTitulo());
 					
-					// Obtener evaluaciones del formato A
-					List<Evaluacion> evaluaciones = servicioBDEvaluaciones.findAll();
-					for (Evaluacion evaluacion : evaluaciones) {
-						if (evaluacion.getFormatoA().getIdFormatoA().equals(formatoA.getIdFormatoA())) {
-							System.out.println("=== EVALUACIÓN ===");
-							System.out.println("ID: " + evaluacion.getIdEvaluacion());
+					// Mostrar evaluacion (lazy loading)
+					if (formatoA.getListaEvaluaciones() != null && !formatoA.getListaEvaluaciones().isEmpty()) {
+						System.out.println("\n=== EVALUACION ===");
+						for (Evaluacion evaluacion : formatoA.getListaEvaluaciones()) {
 							System.out.println("Concepto: " + evaluacion.getConcepto());
+							System.out.println("Fecha: " + evaluacion.getFechaRegistroConcepto());
+							System.out.println("Coordinador: " + evaluacion.getNombreCoordinador());
 							
-							// Mostrar observaciones de la evaluación
-							List<Observacion> observaciones = evaluacion.getListaObservaciones();
-							if (observaciones != null && !observaciones.isEmpty()) {
-								System.out.println("=== OBSERVACIONES ===");
-								for (Observacion observacion : observaciones) {
-									System.out.println("ID: " + observacion.getIdObservacion());
-									System.out.println("Observación: " + observacion.getObservacion());
+							// Mostrar observaciones (lazy loading)
+							if (evaluacion.getListaObservaciones() != null && !evaluacion.getListaObservaciones().isEmpty()) {
+								System.out.println("\n=== OBSERVACIONES ===");
+								for (Observacion observacion : evaluacion.getListaObservaciones()) {
+									System.out.println("Observacion: " + observacion.getObservacion());
+									System.out.println("Fecha: " + observacion.getFechaRegistro());
 								}
-							} else {
-								System.out.println("La evaluación no tiene observaciones.");
 							}
-							
-							break;
 						}
 					}
-					
-					System.out.println("=====================");
 				}
 			}
 			
 			if (!tieneFormatos) {
-				System.out.println("El docente no tiene formatos A registrados.");
+				System.out.println("Este docente no tiene formatos A registrados.");
 			}
-			
 			System.out.println("=====================");
 		}
 	}
