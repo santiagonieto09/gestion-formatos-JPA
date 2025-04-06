@@ -13,8 +13,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Evaluaciones")
 public class Evaluacion {
     @Id
@@ -33,52 +37,5 @@ public class Evaluacion {
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "evaluacion")
     private List<Observacion> listaObservaciones;
-
-    public Integer getIdEvaluacion() {
-        return idEvaluacion;
-    }
-
-    public void setIdEvaluacion(Integer idEvaluacion) {
-        this.idEvaluacion = idEvaluacion;
-    }
-
-    public String getConcepto() {
-        return concepto;
-    }
-
-    public void setConcepto(String concepto) {
-        this.concepto = concepto;
-    }
-
-    public Date getFechaRegistroConcepto() {
-        return fechaRegistroConcepto;
-    }
-
-    public void setFechaRegistroConcepto(Date fechaRegistroConcepto) {
-        this.fechaRegistroConcepto = fechaRegistroConcepto;
-    }
-
-    public String getNombreCoordinador() {
-        return nombreCoordinador;
-    }
-
-    public void setNombreCoordinador(String nombreCoordinador) {
-        this.nombreCoordinador = nombreCoordinador;
-    }
-
-    public FormatoA getFormatoA() {
-        return formatoA;
-    }
-
-    public void setFormatoA(FormatoA formatoA) {
-        this.formatoA = formatoA;
-    }
-
-    public List<Observacion> getListaObservaciones() {
-        return listaObservaciones;
-    }
-
-    public void setListaObservaciones(List<Observacion> listaObservaciones) {
-        this.listaObservaciones = listaObservaciones;
-    }
+    
 }

@@ -10,8 +10,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Observaciones")
 public class Observacion {
     @Id
@@ -25,37 +29,5 @@ public class Observacion {
     @ManyToOne
     @JoinColumn(name = "idEvaluacion", nullable = false)
     private Evaluacion evaluacion;
-
-    public Integer getIdObservacion() {
-        return idObservacion;
-    }
-
-    public void setIdObservacion(Integer idObservacion) {
-        this.idObservacion = idObservacion;
-    }
-
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
-    }
-
-    public Evaluacion getEvaluacion() {
-        return evaluacion;
-    }
-
-    public void setEvaluacion(Evaluacion evaluacion) {
-        this.evaluacion = evaluacion;
-    }
-
-    public Date getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(Date fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
 
 }

@@ -13,8 +13,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "FormatosA")
 public class FormatoA {
@@ -40,61 +44,5 @@ public class FormatoA {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "formatoA")
     private List<Evaluacion> listaEvaluaciones;
-
-    public Integer getIdFormatoA() {
-        return idFormatoA;
-    }
-
-    public void setIdFormatoA(Integer idFormatoA) {
-        this.idFormatoA = idFormatoA;
-    }
-
-    public String getNombreDirector() {
-        return nombreDirector;
-    }
-
-    public void setNombreDirector(String nombreDirector) {
-        this.nombreDirector = nombreDirector;
-    }
-
-    public String getObjetivoGeneral() {
-        return objetivoGeneral;
-    }
-
-    public void setObjetivoGeneral(String objetivoGeneral) {
-        this.objetivoGeneral = objetivoGeneral;
-    }
-
-    public String getObjetivosEspecificos() {
-        return objetivosEspecificos;
-    }
-
-    public void setObjetivosEspecificos(String objetivosEspecificos) {
-        this.objetivosEspecificos = objetivosEspecificos;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public Docente getDocente() {
-        return docente;
-    }
-
-    public void setDocente(Docente docente) {
-        this.docente = docente;
-    }
-
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
 
 }

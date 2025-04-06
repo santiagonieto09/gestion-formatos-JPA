@@ -10,8 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Docentes")
 public class Docente {
     @Id
@@ -30,64 +34,6 @@ public class Docente {
     private List<FormatoA> listaFormatosA; 
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "docente")
-    private List<Historico> listaHistoricos; 
-
-    public Integer getIdDocente() {
-        return idDocente;
-    }
-
-    public void setIdDocente(Integer idDocente) {
-        this.idDocente = idDocente;
-    }
-
-    public String getNombreDocente() {
-        return nombreDocente;
-    }
-
-    public void setNombreDocente(String nombreDocente) {
-        this.nombreDocente = nombreDocente;
-    }
-
-    public String getApellidosDocente() {
-        return apellidosDocente;
-    }
-
-    public void setApellidosDocente(String apellidosDocente) {
-        this.apellidosDocente = apellidosDocente;
-    }
-
-    public String getNombreGrupo() {
-        return nombreGrupo;
-    }
-
-    public void setNombreGrupo(String nombreGrupo) {
-        this.nombreGrupo = nombreGrupo;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public List<FormatoA> getListaFormatosA() {
-        return listaFormatosA;
-    }
-
-    public void setListaFormatosA(List<FormatoA> listaFormatosA) {
-        this.listaFormatosA = listaFormatosA;
-    }
-
-    public List<Historico> getListaHistoricos() {
-        return listaHistoricos;
-    }
-
-    public void setListaHistoricos(List<Historico> listaHistoricos) {
-        this.listaHistoricos = listaHistoricos;
-    }
-
-    
+    private List<Historico> listaHistoricos;     
 
 }

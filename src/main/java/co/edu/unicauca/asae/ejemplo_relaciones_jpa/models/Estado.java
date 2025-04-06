@@ -10,8 +10,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Estados")
 public class Estado {
 
@@ -25,37 +29,4 @@ public class Estado {
     @OneToOne
     @JoinColumn(name = "idFormatoA")
     private FormatoA formatoA;
-
-    public Integer getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(Integer idEstado) {
-        this.idEstado = idEstado;
-    }
-
-    public String getEstadoActual() {
-        return estadoActual;
-    }
-
-    public void setEstadoActual(String estadoActual) {
-        this.estadoActual = estadoActual;
-    }
-
-    public Date getFechaRegistroEstado() {
-        return fechaRegistroEstado;
-    }
-
-    public void setFechaRegistroEstado(Date fechaRegistroEstado) {
-        this.fechaRegistroEstado = fechaRegistroEstado;
-    }
-
-    public FormatoA getFormatoA() {
-        return formatoA;
-    }
-
-    public void setFormatoA(FormatoA formatoA) {
-        this.formatoA = formatoA;
-    }
-
 }

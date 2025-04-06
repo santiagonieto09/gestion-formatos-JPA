@@ -70,8 +70,8 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 
 		//crearFormatoA();
 		//crearObservacion();
-		listarObservaciones();
-		//listarMiembrosComite();
+		//listarObservaciones();
+		listarMiembrosComite();
 		//consultarFormatosAPorDocente();
 	}
 

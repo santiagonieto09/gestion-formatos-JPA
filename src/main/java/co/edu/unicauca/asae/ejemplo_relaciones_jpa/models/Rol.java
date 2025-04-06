@@ -10,8 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Roles")
 public class Rol {
 
@@ -22,32 +26,6 @@ public class Rol {
     private String rolAsignado;
 
      @OneToMany(fetch = FetchType.EAGER, mappedBy = "rol")
-    private List<Historico> listaHistoricos;
-
-    public Integer getIdRol() {
-        return idRol;
-    }
-
-    public void setIdRol(Integer idRol) {
-        this.idRol = idRol;
-    }
-
-    public String getRolAsignado() {
-        return rolAsignado;
-    }
-
-    public void setRolAsignado(String rolAsignado) {
-        this.rolAsignado = rolAsignado;
-    }
-
-    public List<Historico> getListaHistoricos() {
-        return listaHistoricos;
-    }
-
-    public void setListaHistoricos(List<Historico> listaHistoricos) {
-        this.listaHistoricos = listaHistoricos;
-    }
-  
-    
+    private List<Historico> listaHistoricos;  
 
 }
