@@ -33,7 +33,7 @@ public class FormatoA {
     private String objetivoGeneral;
     @Column(name = "objetivos_especificos", nullable = false)
     private String objetivosEspecificos;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String titulo;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
