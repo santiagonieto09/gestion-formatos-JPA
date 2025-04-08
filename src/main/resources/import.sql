@@ -45,7 +45,7 @@ VALUES (1, 'María López', 'Carlos Rodríguez', '/documentos/carta_aceptacion.p
 
 -- Evaluaciones
 INSERT INTO `Evaluaciones` (`idEvaluacion`, `concepto`, `fecha_registro_concepto`, `nombre_coordinador`, `idFormatoA`) 
-VALUES (1, 'Por corregir', '2023-04-15', 'Coordinador de Posgrados', 10);
+VALUES (1, 'Por corregir', '2023-04-15', 'Coordinador de Posgrados', 1);
 
 -- Observaciones
 INSERT INTO `Observaciones` (`idObservacion`, `observacion`, `fecha_registro_observacion`, `idEvaluacion`) 
