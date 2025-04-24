@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.ejemplo_relaciones_jpa.models;
+package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades;
 import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +26,7 @@ import lombok.Setter;
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "FormatosA")
-public class FormatoA {
+public class FormatoAEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,14 +40,14 @@ public class FormatoA {
     @Column(unique = true, nullable = false)
     private String titulo;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "idDocente", nullable = false)
-    private Docente docente;
+    private DocenteEntity docenteEntity;
 
     @OneToOne(mappedBy = "formatoA", cascade = CascadeType.PERSIST)
-    private Estado estado;
+    private EstadoEntity estadoEntity;
 
-    @OneToMany(mappedBy = "formatoA", fetch = FetchType.LAZY)
-    private List<Evaluacion> listaEvaluaciones;
+    @OneToMany(mappedBy = "formatoA", fetch = FetchType.EAGER)
+    private List<EvaluacionEntity> listaEvaluaciones;
 
 }

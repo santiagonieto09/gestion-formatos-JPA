@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.ejemplo_relaciones_jpa.models;
+package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "Docentes")
-public class Docente {
+public class DocenteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDocente;
@@ -29,15 +29,15 @@ public class Docente {
     private String nombreDocente;
     @Column(name = "apellidos_docente", nullable = false, length = 100)
     private String apellidosDocente;
-    @Column(name = "nombre_grupo", nullable = false, length = 50)
+    @Column(name = "nombre_grupo", nullable = true, length = 50)
     private String nombreGrupo;
     @Column(unique = true, nullable = false, length = 100)
     private String correo;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "docente")
-    private List<FormatoA> listaFormatosA; 
+    private List<FormatoAEntity> listaFormatosA;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "docente")
-    private List<Historico> listaHistoricos;     
+    private List<HistoricoEntity> listaHistoricoEntities;
 
 }

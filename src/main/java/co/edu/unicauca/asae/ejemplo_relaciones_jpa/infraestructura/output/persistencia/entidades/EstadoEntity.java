@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.ejemplo_relaciones_jpa.models;
+package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades;
 
 import java.util.Date;
 
@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "Estados")
-public class Estado {
+public class EstadoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +32,5 @@ public class Estado {
     private Date fechaRegistroEstado;
     @OneToOne
     @JoinColumn(name = "idFormatoA", nullable = false)
-    private FormatoA formatoA;
+    private FormatoAEntity formatoAEntity;
 }

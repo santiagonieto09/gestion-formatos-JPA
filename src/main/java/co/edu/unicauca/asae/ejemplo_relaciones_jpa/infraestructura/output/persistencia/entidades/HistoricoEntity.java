@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.ejemplo_relaciones_jpa.models;
+package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades;
 
 import java.util.Date;
 
@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "Historicos")
-public class Historico {
+public class HistoricoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +30,11 @@ public class Historico {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idDocente", nullable = false)
-    private Docente docente;
+    private DocenteEntity docenteEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idRol", nullable = false)
-    private Rol rol;
+    private RolEntity rolEntity;
 
     @Column(nullable = false)
     private Boolean activo;

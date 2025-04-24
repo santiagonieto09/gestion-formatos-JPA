@@ -40,7 +40,7 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
    - `@ManyToOne` con `Docente` y `Evaluacion`.
 
 ### Convenciones
-- **Nombres de tablas**: En plural (ej: `formatos_a`, `docentes`).
+- **Nombres de tablas**: En plural (ej: `formatos_a`, `docenteEntities`).
 - **Anotaciones**: Uso de `@Column` para detalles como unicidad (`unique = true`) y restricciones.
 
 ---
@@ -64,7 +64,7 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
 
 ## Métodos Implementados
 ### 1. Crear Formato A (`crearFormatoA`)
-- **Funcionalidad**: Crea un formato (PP-A o TI-A) y asocia un estado inicial "En formulación".
+- **Funcionalidad**: Crea un formato (PP-A o TI-A) y asocia un estadoEntity inicial "En formulación".
 - **Cascada**: Persistencia automática de `Estado` y `Docente` (si no existe).
 - **Transacción**: `@Transactional(readOnly = false)`.
 
@@ -74,7 +74,7 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
 
 ### 3. Listar Observaciones (`listarObservaciones`)
 - **Fetch**: `EAGER` para `Evaluacion` y `Docente`.
-- **Salida**: Muestra formato A, estado, evaluación y observaciones.
+- **Salida**: Muestra formato A, estadoEntity, evaluación y observaciones.
 
 ### 4. Listar Miembros del Comité (`listarMiembrosComite`)
 - **Fetch**: `LAZY` para roles.
@@ -82,13 +82,13 @@ Este proyecto tiene como objetivo implementar una aplicación para gestionar los
 
 ### 5. Consultar Formatos por Docente (`consultarFormatosPorDocente`)
 - **Fetch**: `EAGER` para formatos A y `LAZY` para evaluaciones.
-- **Salida**: Lista de formatos asociados al docente.
+- **Salida**: Lista de formatos asociados al docenteEntity.
 
 ---
 
 ## Scripts
 1. **Importar Datos**:
-   - Ejecutar scripts SQL almacenados en `import.sql` para registros iniciales (docentes, roles, etc.).
+   - Ejecutar scripts SQL almacenados en `import.sql` para registros iniciales (docenteEntities, roles, etc.).
 
 ---
 

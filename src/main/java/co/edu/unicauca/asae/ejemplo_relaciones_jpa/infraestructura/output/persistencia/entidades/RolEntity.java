@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.ejemplo_relaciones_jpa.models;
+package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "Roles")
-public class Rol {
+public class RolEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +30,6 @@ public class Rol {
     private String rolAsignado;
 
      @OneToMany(fetch = FetchType.EAGER, mappedBy = "rol")
-    private List<Historico> listaHistoricos;  
+    private List<HistoricoEntity> listaHistoricoEntities;
 
 }

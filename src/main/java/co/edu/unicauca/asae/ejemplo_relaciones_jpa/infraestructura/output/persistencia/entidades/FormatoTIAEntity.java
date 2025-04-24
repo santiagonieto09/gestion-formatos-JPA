@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.ejemplo_relaciones_jpa.models;
+package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "FormatosTIA")
-public class FormatoTIA extends FormatoA {
+public class FormatoTIAEntity extends FormatoAEntity {
 
     @Column(name = "nombre_estudiante1", nullable = false, length = 100)
     private String nombreEstudiante1;

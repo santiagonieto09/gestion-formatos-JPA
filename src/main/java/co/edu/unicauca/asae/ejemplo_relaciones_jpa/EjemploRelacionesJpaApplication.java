@@ -4,29 +4,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.models.Docente;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.models.Estado;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.models.Evaluacion;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.models.FormatoA;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.models.FormatoPPA;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.models.Historico;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.models.Observacion;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.models.Rol;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.repositories.DocentesRepository;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.repositories.EstadosRepository;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.repositories.EvaluacionesRepository;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.repositories.FormatosARepository;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.repositories.FormatosPPARepository;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.repositories.FormatosTIARepository;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.repositories.HistoricosRepository;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.repositories.ObservacionesRepository;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.repositories.RolesRepository;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.DocenteEntity;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.DocentesRepository;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.EstadosRepository;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.EvaluacionesRepository;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.FormatosARepository;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.FormatosPPARepository;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.FormatosTIARepository;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.HistoricosRepository;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.ObservacionesRepository;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.RolesRepository;
 
 @SpringBootApplication
 @Transactional
@@ -84,19 +78,19 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 	@Transactional
 	public void crearFormatoA() {
 		// Crear un docente si no existe
-		Docente docente = new Docente();
-		docente.setNombreDocente("Juan");
-		docente.setApellidosDocente("Pérez");
-		docente.setNombreGrupo("GIDATI");
-		docente.setCorreo("juan.perez@unicauca.edu.co");
+		DocenteEntity docenteEntity = new DocenteEntity();
+		docenteEntity.setNombreDocente("Juan");
+		docenteEntity.setApellidosDocente("Pérez");
+		docenteEntity.setNombreGrupo("GIDATI");
+		docenteEntity.setCorreo("juan.perez@unicauca.edu.co");
 		
 		// Verificar si el docente ya existe por correo
-		List<Docente> docentesExistentes = servicioBDDocentes.findAll();
+		List<DocenteEntity> docentesExistentes = servicioBDDocentes.findAll();
 		boolean docenteExiste = false;
 		
-		for (Docente d : docentesExistentes) {
-			if (d.getCorreo().equals(docente.getCorreo())) {
-				docente = d;
+		for (DocenteEntity d : docentesExistentes) {
+			if (d.getCorreo().equals(docenteEntity.getCorreo())) {
+				docenteEntity = d;
 				docenteExiste = true;
 				break;
 			}
@@ -104,28 +98,28 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 		
 		// Si el docente no existe, guardarlo
 		if (!docenteExiste) {
-			servicioBDDocentes.save(docente);
+			servicioBDDocentes.save(docenteEntity);
 		}
 		
 		// Crear un FormatoPPA
-		FormatoPPA formatoPPA = new FormatoPPA();
+		FormatoPPAEntity formatoPPA = new FormatoPPAEntity();
 		formatoPPA.setNombreDirector("Santiago Nieto");
 		formatoPPA.setObjetivoGeneral("Desarrollar una aplicación web para la gestión de formatos de propuestas de trabajo de grado");
 		formatoPPA.setObjetivosEspecificos("1. Diseñar la arquitectura de la aplicación\n2. Implementar la interfaz de usuario\n3. Desarrollar la lógica de negocio");
 		formatoPPA.setTitulo("Sistema de Gestión de Formatos de Propuestas de Trabajo de Grado");
-		formatoPPA.setDocente(docente);
+		formatoPPA.setDocenteEntity(docenteEntity);
 		formatoPPA.setNombreAsesor("María López");
 		formatoPPA.setNombreEstudiante1("Jeferson Castaño");
 		formatoPPA.setRutaCartaAceptacion("/documentos/carta_aceptacion.pdf");
 		
 		// Crear el estado inicial
-		Estado estado = new Estado();
-		estado.setEstadoActual("En formulación");
-		estado.setFechaRegistroEstado(new Date());
+		EstadoEntity estadoEntity = new EstadoEntity();
+		estadoEntity.setEstadoActual("En formulación");
+		estadoEntity.setFechaRegistroEstado(new Date());
 		
 		// Establecer la relacion bidireccional
-		formatoPPA.setEstado(estado);
-		estado.setFormatoA(formatoPPA);
+		formatoPPA.setEstadoEntity(estadoEntity);
+		estadoEntity.setFormatoAEntity(formatoPPA);
 		
 		// Guardar solo el formatoPPA, la cascada persist se encarga del resto
 		servicioBDFormatosPPA.save(formatoPPA);
@@ -148,67 +142,67 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 	@Transactional
 	public void crearObservacion() {
 		// Obtener un formato A existente
-		List<FormatoA> formatosA = servicioBDFormatosA.findAll();
+		List<FormatoAEntity> formatosA = servicioBDFormatosA.findAll();
 		if (formatosA.isEmpty()) {
 			System.out.println("No hay formatos A disponibles. Primero debe crear un formato A.");
 			return;
 		}
 		
-		FormatoA formatoA = formatosA.get(0);
+		FormatoAEntity formatoAEntity = formatosA.get(0);
 		
 		// Verificar si el formato A tiene evaluaciones
-		List<Evaluacion> evaluaciones = servicioBDEvaluaciones.findAll();
-		Evaluacion evaluacion = null;
+		List<EvaluacionEntity> evaluaciones = servicioBDEvaluaciones.findAll();
+		EvaluacionEntity evaluacionEntity = null;
 		
 		// Buscar la última evaluación asociada al formato A
-		for (Evaluacion e : evaluaciones) {
-			if (e.getFormatoA().getIdFormatoA().equals(formatoA.getIdFormatoA())) {
+		for (EvaluacionEntity e : evaluaciones) {
+			if (e.getFormatoAEntity().getIdFormatoA().equals(formatoAEntity.getIdFormatoA())) {
 				if (e.getConcepto().equals("Por corregir")) {
-					evaluacion = e;
+					evaluacionEntity = e;
 					break;
 				}
 			}
 		}
 		
 		// Si no hay evaluacion o no hay una en estado "Por corregir", crear una nueva
-		if (evaluacion == null) {
-			evaluacion = new Evaluacion();
-			evaluacion.setConcepto(""); // Sin concepto por establecer
-			evaluacion.setFechaRegistroConcepto(new Date());
-			evaluacion.setNombreCoordinador("Coordinador de Posgrados");
-			evaluacion.setFormatoA(formatoA);
-			servicioBDEvaluaciones.save(evaluacion);
+		if (evaluacionEntity == null) {
+			evaluacionEntity = new EvaluacionEntity();
+			evaluacionEntity.setConcepto(""); // Sin concepto por establecer
+			evaluacionEntity.setFechaRegistroConcepto(new Date());
+			evaluacionEntity.setNombreCoordinador("Coordinador de Posgrados");
+			evaluacionEntity.setFormatoAEntity(formatoAEntity);
+			servicioBDEvaluaciones.save(evaluacionEntity);
 		}
 		
 		// Obtener docentes existentes
-		List<Docente> docentes = servicioBDDocentes.findAll();
-		if (docentes.isEmpty()) {
+		List<DocenteEntity> docenteEntities = servicioBDDocentes.findAll();
+		if (docenteEntities.isEmpty()) {
 			System.out.println("No hay docentes disponibles. Primero debe crear un docente.");
 			return;
 		}
 		
 		// Crear lista de IDs de docentes
 		List<Integer> idsDocentes = new ArrayList<>();
-		for (Docente docente : docentes) {
-			idsDocentes.add(docente.getIdDocente());
+		for (DocenteEntity docenteEntity : docenteEntities) {
+			idsDocentes.add(docenteEntity.getIdDocente());
 		}
 		
 		// Crear la observacion
-		Observacion observacion = new Observacion();
-		observacion.setObservacion("Se requiere mejorar la redacción del objetivo general");
-		observacion.setFechaRegistro(new Date());
-		observacion.setIdsDocentes(idsDocentes); // Asignar la lista de IDs de docentes
+		ObservacionEntity observacionEntity = new ObservacionEntity();
+		observacionEntity.setObservacion("Se requiere mejorar la redacción del objetivo general");
+		observacionEntity.setFechaRegistro(new Date());
+		observacionEntity.setIdsDocentes(idsDocentes); // Asignar la lista de IDs de docentes
 		
 		// Obtener referencias usando getReferenceById
-		Evaluacion evaluacionRef = servicioBDEvaluaciones.getReferenceById(evaluacion.getIdEvaluacion());
+		EvaluacionEntity evaluacionEntityRef = servicioBDEvaluaciones.getReferenceById(evaluacionEntity.getIdEvaluacion());
 		
 		// Asociar la observacion con la evaluacion
-		observacion.setEvaluacion(evaluacionRef);
+		observacionEntity.setEvaluacionEntity(evaluacionEntityRef);
 		
 		// Guardar la observacion
-		servicioBDObservaciones.save(observacion);
+		servicioBDObservaciones.save(observacionEntity);
 		
-		System.out.println("Observacion creada con éxito. ID: " + observacion.getIdObservacion());
+		System.out.println("Observacion creada con éxito. ID: " + observacionEntity.getIdObservacion());
 	}
 
 	/**
@@ -219,7 +213,7 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 	@Transactional(readOnly = true)
 	public void listarObservaciones() {
 		// Obtener todos los formatos A con sus relaciones
-		List<FormatoA> formatosA = servicioBDFormatosA.findAll();
+		List<FormatoAEntity> formatosA = servicioBDFormatosA.findAll();
 		
 		if (formatosA.isEmpty()) {
 			System.out.println("No hay formatos A disponibles.");
@@ -227,48 +221,48 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 		}
 		
 		// Mostrar información de cada formato A
-		for (FormatoA formatoA : formatosA) {
+		for (FormatoAEntity formatoAEntity : formatosA) {
 			System.out.println("=== FORMATO A ===");
-			System.out.println("ID: " + formatoA.getIdFormatoA());
-			System.out.println("Título: " + formatoA.getTitulo());
-			System.out.println("Director: " + formatoA.getNombreDirector());
+			System.out.println("ID: " + formatoAEntity.getIdFormatoA());
+			System.out.println("Título: " + formatoAEntity.getTitulo());
+			System.out.println("Director: " + formatoAEntity.getNombreDirector());
 			
 			// Mostrar estado
-			Estado estado = formatoA.getEstado();
-			if (estado != null) {
+			EstadoEntity estadoEntity = formatoAEntity.getEstadoEntity();
+			if (estadoEntity != null) {
 				System.out.println("=== ESTADO ===");
-				System.out.println("Estado actual: " + estado.getEstadoActual());
-				System.out.println("Fecha registro: " + estado.getFechaRegistroEstado());
+				System.out.println("Estado actual: " + estadoEntity.getEstadoActual());
+				System.out.println("Fecha registro: " + estadoEntity.getFechaRegistroEstado());
 			} else {
 				System.out.println("El formato no tiene estado registrado.");
 			}
 			
 			// Obtener evaluaciones directamente del formato A
-			List<Evaluacion> evaluaciones = formatoA.getListaEvaluaciones();
+			List<EvaluacionEntity> evaluaciones = formatoAEntity.getListaEvaluaciones();
 			if (evaluaciones != null && !evaluaciones.isEmpty()) {
-				for (Evaluacion evaluacion : evaluaciones) {
+				for (EvaluacionEntity evaluacionEntity : evaluaciones) {
 					System.out.println("=== EVALUACIÓN ===");
-					System.out.println("ID: " + evaluacion.getIdEvaluacion());
-					System.out.println("Concepto: " + evaluacion.getConcepto());
-					System.out.println("Fecha registro: " + evaluacion.getFechaRegistroConcepto());
-					System.out.println("Coordinador: " + evaluacion.getNombreCoordinador());
+					System.out.println("ID: " + evaluacionEntity.getIdEvaluacion());
+					System.out.println("Concepto: " + evaluacionEntity.getConcepto());
+					System.out.println("Fecha registro: " + evaluacionEntity.getFechaRegistroConcepto());
+					System.out.println("Coordinador: " + evaluacionEntity.getNombreCoordinador());
 					
 					// Mostrar observaciones de la evaluacion
-					List<Observacion> observaciones = evaluacion.getListaObservaciones();
+					List<ObservacionEntity> observaciones = evaluacionEntity.getListaObservaciones();
 					if (observaciones != null && !observaciones.isEmpty()) {
 						System.out.println("=== OBSERVACIONES ===");
-						for (Observacion observacion : observaciones) {
-							System.out.println("ID: " + observacion.getIdObservacion());
-							System.out.println("Observación: " + observacion.getObservacion());
-							System.out.println("Fecha registro: " + observacion.getFechaRegistro());
+						for (ObservacionEntity observacionEntity : observaciones) {
+							System.out.println("ID: " + observacionEntity.getIdObservacion());
+							System.out.println("Observación: " + observacionEntity.getObservacion());
+							System.out.println("Fecha registro: " + observacionEntity.getFechaRegistro());
 							
 							// Mostrar docentes que plantearon la observacion
-							List<Integer> idsDocentes = observacion.getIdsDocentes();
+							List<Integer> idsDocentes = observacionEntity.getIdsDocentes();
 							if (idsDocentes != null && !idsDocentes.isEmpty()) {
 								System.out.println("Docentes que plantearon la observación:");
 								for (Integer idDocente : idsDocentes) {
-									Docente docente = servicioBDDocentes.getReferenceById(idDocente);
-									System.out.println("- " + docente.getNombreDocente() + " " + docente.getApellidosDocente());
+									DocenteEntity docenteEntity = servicioBDDocentes.getReferenceById(idDocente);
+									System.out.println("- " + docenteEntity.getNombreDocente() + " " + docenteEntity.getApellidosDocente());
 								}
 							}
 						}
@@ -291,25 +285,25 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 	@Transactional(readOnly = true)
 	public void listarMiembrosComite() {
 		// Obtener todos los historicos
-		List<Historico> historicos = servicioBDHistoricos.findAll();
+		List<HistoricoEntity> historicoEntities = servicioBDHistoricos.findAll();
 		
-		if (historicos.isEmpty()) {
+		if (historicoEntities.isEmpty()) {
 			System.out.println("No hay miembros del comité registrados.");
 			return;
 		}
 		
 		// Mostrar informacion de cada miembro del comite
-		for (Historico historico : historicos) {
-			Docente docente = historico.getDocente();
-			Rol rol = historico.getRol();
+		for (HistoricoEntity historicoEntity : historicoEntities) {
+			DocenteEntity docenteEntity = historicoEntity.getDocenteEntity();
+			RolEntity rolEntity = historicoEntity.getRolEntity();
 			
 			System.out.println("=== MIEMBRO DEL COMITÉ ===");
-			System.out.println("Docente: " + docente.getNombreDocente() + " " + docente.getApellidosDocente());
-			System.out.println("Rol: " + rol.getRolAsignado());
-			System.out.println("Fecha inicio: " + historico.getFechaInicio());
+			System.out.println("Docente: " + docenteEntity.getNombreDocente() + " " + docenteEntity.getApellidosDocente());
+			System.out.println("Rol: " + rolEntity.getRolAsignado());
+			System.out.println("Fecha inicio: " + historicoEntity.getFechaInicio());
 			
-			if (historico.getFechaFin() != null) {
-				System.out.println("Fecha fin: " + historico.getFechaFin());
+			if (historicoEntity.getFechaFin() != null) {
+				System.out.println("Fecha fin: " + historicoEntity.getFechaFin());
 			} else {
 				System.out.println("Fecha fin: Sin fecha de fin registrada");
 			}
@@ -325,44 +319,44 @@ public class EjemploRelacionesJpaApplication implements CommandLineRunner {
 	@Transactional(readOnly = true)
 	public void consultarFormatosAPorDocente() {
 		// Obtener todos los docentes
-		List<Docente> docentes = servicioBDDocentes.findAll();
+		List<DocenteEntity> docenteEntities = servicioBDDocentes.findAll();
 		
-		if (docentes.isEmpty()) {
+		if (docenteEntities.isEmpty()) {
 			System.out.println("No hay docentes disponibles.");
 			return;
 		}
 		
 		// Mostrar formatos A de cada docente
-		for (Docente docente : docentes) {
+		for (DocenteEntity docenteEntity : docenteEntities) {
 			System.out.println("=== DOCENTE ===");
-			System.out.println("Nombre: " + docente.getNombreDocente() + " " + docente.getApellidosDocente());
-			System.out.println("Correo: " + docente.getCorreo());
+			System.out.println("Nombre: " + docenteEntity.getNombreDocente() + " " + docenteEntity.getApellidosDocente());
+			System.out.println("Correo: " + docenteEntity.getCorreo());
 			
 			// Obtener formatos A del docente
-			List<FormatoA> formatosA = servicioBDFormatosA.findAll();
+			List<FormatoAEntity> formatosA = servicioBDFormatosA.findAll();
 			boolean tieneFormatos = false;
 			
-			for (FormatoA formatoA : formatosA) {
-				if (formatoA.getDocente().getIdDocente().equals(docente.getIdDocente())) {
+			for (FormatoAEntity formatoAEntity : formatosA) {
+				if (formatoAEntity.getDocenteEntity().getIdDocente().equals(docenteEntity.getIdDocente())) {
 					tieneFormatos = true;
 					System.out.println("\n=== FORMATO A ===");
-					System.out.println("ID: " + formatoA.getIdFormatoA());
-					System.out.println("Título: " + formatoA.getTitulo());
+					System.out.println("ID: " + formatoAEntity.getIdFormatoA());
+					System.out.println("Título: " + formatoAEntity.getTitulo());
 					
 					// Mostrar evaluacion (lazy loading)
-					if (formatoA.getListaEvaluaciones() != null && !formatoA.getListaEvaluaciones().isEmpty()) {
+					if (formatoAEntity.getListaEvaluaciones() != null && !formatoAEntity.getListaEvaluaciones().isEmpty()) {
 						System.out.println("\n=== EVALUACION ===");
-						for (Evaluacion evaluacion : formatoA.getListaEvaluaciones()) {
-							System.out.println("Concepto: " + evaluacion.getConcepto());
-							System.out.println("Fecha: " + evaluacion.getFechaRegistroConcepto());
-							System.out.println("Coordinador: " + evaluacion.getNombreCoordinador());
+						for (EvaluacionEntity evaluacionEntity : formatoAEntity.getListaEvaluaciones()) {
+							System.out.println("Concepto: " + evaluacionEntity.getConcepto());
+							System.out.println("Fecha: " + evaluacionEntity.getFechaRegistroConcepto());
+							System.out.println("Coordinador: " + evaluacionEntity.getNombreCoordinador());
 							
 							// Mostrar observaciones (lazy loading)
-							if (evaluacion.getListaObservaciones() != null && !evaluacion.getListaObservaciones().isEmpty()) {
+							if (evaluacionEntity.getListaObservaciones() != null && !evaluacionEntity.getListaObservaciones().isEmpty()) {
 								System.out.println("\n=== OBSERVACIONES ===");
-								for (Observacion observacion : evaluacion.getListaObservaciones()) {
-									System.out.println("Observacion: " + observacion.getObservacion());
-									System.out.println("Fecha: " + observacion.getFechaRegistro());
+								for (ObservacionEntity observacionEntity : evaluacionEntity.getListaObservaciones()) {
+									System.out.println("Observacion: " + observacionEntity.getObservacion());
+									System.out.println("Fecha: " + observacionEntity.getFechaRegistro());
 								}
 							}
 						}

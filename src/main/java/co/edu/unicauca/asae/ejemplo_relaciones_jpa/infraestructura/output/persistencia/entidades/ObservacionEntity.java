@@ -1,4 +1,4 @@
-package co.edu.unicauca.asae.ejemplo_relaciones_jpa.models;
+package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades;
 
 import java.util.Date;
 import java.util.List;
@@ -24,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "Observaciones")
-public class Observacion {
+public class ObservacionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idObservacion;
@@ -41,6 +41,6 @@ public class Observacion {
 
     @ManyToOne
     @JoinColumn(name = "idEvaluacion", nullable = false)
-    private Evaluacion evaluacion;
+    private EvaluacionEntity evaluacionEntity;
 
 }
