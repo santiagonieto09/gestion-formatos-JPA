@@ -1,5 +1,6 @@
 package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.controladores;
 
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.aplicacion.input.GestionFormatoACUIntPort;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.peticion.FormatoDTOPeticion;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.FormatoDTORespuesta;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.ObservacionesDTORespuesta;
@@ -14,6 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/formatoA")
 public class FormatoARestController {
+
+    private final GestionFormatoACUIntPort objGestionFormatoACUIntPort;
+
     //TODO: Crear formatoA
     @PostMapping
     public ResponseEntity<FormatoDTORespuesta> crearFormatoA(@RequestBody FormatoDTOPeticion formatoDTOPeticion) {
@@ -22,7 +26,7 @@ public class FormatoARestController {
 
     //TODO: Listar observaciones de un formatoA. se necesita devolver la info del formato A
     @GetMapping("/{idFormatoA}/observaciones")
-    public ResponseEntity<ObservacionesDTORespuesta> listarObservacionesFormatoA(@RequestParam String idFormatoA) {
+    public ResponseEntity<ObservacionesDTORespuesta> listarObservacionesFormatoA(@RequestParam Integer idFormatoA) {
         return ResponseEntity.ok().build();
     }
 
