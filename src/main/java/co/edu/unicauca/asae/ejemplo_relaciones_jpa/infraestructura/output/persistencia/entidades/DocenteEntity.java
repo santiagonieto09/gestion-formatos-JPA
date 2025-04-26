@@ -35,7 +35,7 @@ public class DocenteEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "docenteEntity")
     private List<FormatoAEntity> listaFormatosA;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docenteEntity")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "docenteEntity")
     private List<HistoricoEntity> listaHistoricoEntities;
 
 }

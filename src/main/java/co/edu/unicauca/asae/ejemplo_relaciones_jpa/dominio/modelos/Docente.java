@@ -13,5 +13,5 @@ public class Docente {
     private String apellidosDocente;
     private String nombreGrupo;
     private String correo;
-    private List<Historico> listaHistorico;
+    private List<Historico> listaHistoricos;
 }

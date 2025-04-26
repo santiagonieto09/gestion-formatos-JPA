@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 public class Historico {
     private Integer idHistoricos;
-    private Docente docente;
     private Rol rol;
     private Boolean activo;
     private Date fechaInicio;

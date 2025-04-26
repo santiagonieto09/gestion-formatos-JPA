@@ -17,6 +17,10 @@ public interface DocentesRepository extends JpaRepository<DocenteEntity, Integer
     @Query("SELECT COUNT(d) > 0 FROM DocenteEntity d WHERE LOWER(d.correo) = LOWER(:correo)")
     boolean existeDocenteConCorreo(@Param("correo") String correo);
 
-
+    @Query("SELECT d FROM DocenteEntity d " +
+            "JOIN d.listaHistoricoEntities h " +
+            "JOIN h.rolEntity r " +
+            "WHERE r.rolAsignado = :rolComite")
+    List<DocenteEntity> buscarMiembrosComite(@Param("rolComite") String rolComite);
 
 } 

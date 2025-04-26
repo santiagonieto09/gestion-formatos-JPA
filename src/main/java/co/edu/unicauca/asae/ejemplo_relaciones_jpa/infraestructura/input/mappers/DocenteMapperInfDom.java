@@ -2,7 +2,9 @@ package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.mapper
 
 
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos.Docente;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos.Historico;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.DocenteDTORespuesta;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.HistoricoDTO;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.DocenteEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -16,5 +18,7 @@ public interface DocenteMapperInfDom {
     DocenteDTORespuesta toDTO(Docente docente);
 
     List<DocenteDTORespuesta> toDocenteDTOList(List<Docente> docentes);
+
+    HistoricoDTO toHistoricoDTO(Historico historico);
 }
 
