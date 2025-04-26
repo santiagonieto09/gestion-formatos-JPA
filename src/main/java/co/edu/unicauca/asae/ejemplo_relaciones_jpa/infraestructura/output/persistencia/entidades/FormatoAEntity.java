@@ -1,4 +1,6 @@
 package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +17,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @AllArgsConstructor
@@ -35,6 +38,10 @@ public class FormatoAEntity {
     private String objetivosEspecificos;
     @Column(unique = true, nullable = false)
     private String titulo;
+
+    @CreationTimestamp
+    @Column(name = "fecha_creacion", nullable = false, updatable = false)
+    private Date fechaCreacion;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "idDocente", nullable = false)

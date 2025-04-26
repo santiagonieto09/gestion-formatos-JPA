@@ -21,10 +21,10 @@ INSERT INTO `Historicos` (`idHistoricos`, `idDocente`, `idRol`, `activo`, `fecha
 INSERT INTO `Historicos` (`idHistoricos`, `idDocente`, `idRol`, `activo`, `fechaInicio`, `fechaFin`) VALUES (3, 3, 3, 1, '2023-01-01', NULL);
 
 -- FormatosA
-INSERT INTO `FormatosA` (`idFormatoA`, `objetivo_general`, `objetivos_especificos`, `titulo`, `idDocente`) VALUES (1, 'Desarrollar una aplicación web para la gestión de formatos de propuestas de trabajo de grado', '1. Diseñar la arquitectura de la aplicación\n2. Implementar la interfaz de usuario\n3. Desarrollar la lógica de negocio', 'Sistema de Gestión de Formatos de Propuestas de Trabajo de Grado', 1);
+INSERT INTO `FormatosA` (`idFormatoA`, `objetivo_general`, `objetivos_especificos`, `titulo`, `idDocente`, `fecha_creacion`) VALUES (1, 'Desarrollar una aplicación web para la gestión de formatos de propuestas de trabajo de grado', '1. Diseñar la arquitectura de la aplicación\n2. Implementar la interfaz de usuario\n3. Desarrollar la lógica de negocio', 'Sistema de Gestión de Formatos de Propuestas de Trabajo de Grado', 1, '2022-04-01 10:00:00');
 
 -- Estados
-INSERT INTO `Estados` (`idEstado`, `estado_actual`, `fecha_registro_estado`, `idFormatoA`) VALUES (1, 'En formulación', '2023-04-01', 1);
+INSERT INTO `Estados` (`idFormatoA`, `estado_actual`, `fecha_registro_estado`) VALUES (1, 'En formulación', '2023-04-01');
 
 -- FormatosPPA
 INSERT INTO `FormatosPPA` (`idFormatoA`, `nombre_asesor`, `nombre_estudiante1`, `ruta_carta_aceptacion`) VALUES (1, 'María López', 'Carlos Rodríguez', '/documentos/carta_aceptacion.pdf');

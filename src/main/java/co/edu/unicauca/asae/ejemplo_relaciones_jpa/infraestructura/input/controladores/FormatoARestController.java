@@ -7,6 +7,7 @@ import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.res
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.ObservacionesDTORespuesta;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.mappers.FormatoAMapperInfDom;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,6 @@ public class FormatoARestController {
     public ResponseEntity<FormatoDTORespuesta> crearFormatoA(@RequestBody FormatoDTOPeticion formatoDTOPeticion) {
         FormatoA formatoACrear = FormatoAMapperInfDom.INSTANCE.toDomain(formatoDTOPeticion);
         FormatoA formatoACreado = objGestionFormatoACUIntPort.crearFormatoA(formatoACrear);
-        System.out.println("FormatoA creado: " + formatoACreado);
-        System.out.println("FormatoA DTO: " + FormatoAMapperInfDom.INSTANCE.toDTO(formatoACreado));
         return new ResponseEntity<>(
                 FormatoAMapperInfDom.INSTANCE.toDTO(formatoACreado),
                 HttpStatus.CREATED
@@ -39,18 +38,23 @@ public class FormatoARestController {
         return ResponseEntity.ok().build();
     }
 
-    //TODO: Consultar por docente
     @GetMapping("/docente/{idDocente}")
-    public ResponseEntity<List<FormatoDTORespuesta>> consultarFormatosADocente(@RequestParam Integer idDocente) {
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<FormatoDTORespuesta>> consultarFormatosADocente(@PathVariable Integer idDocente) {
+        List<FormatoA> formatosADocente = objGestionFormatoACUIntPort.consultarFormatosADocente(idDocente);
+        return new ResponseEntity<>(
+                FormatoAMapperInfDom.INSTANCE.toDTOList(formatosADocente),
+                HttpStatus.OK
+        );
     }
 
-    //TODO: Consultar por docente entre rango de fechas
-    @GetMapping("/docente/{idDocente}/rangoFechas/{fechaInicio}/{fechaFin}")
+    @GetMapping("/docente/{idDocente}/rangoFechas")
     public ResponseEntity<List<FormatoDTORespuesta>> consultarFormatosADocenteRangoFechas(@PathVariable Integer idDocente,
-                                                                                           @PathVariable Date fechaInicio,
-                                                                                           @PathVariable Date fechaFin) {
-        return ResponseEntity.ok().build();
+                                                                                           @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") Date fechaInicio,
+                                                                                           @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") Date fechaFin) {
+        List<FormatoA> formatosADocente = objGestionFormatoACUIntPort.consultarFormatosADocenteRangoFechas(idDocente, fechaInicio, fechaFin);
+        return new ResponseEntity<>(
+                FormatoAMapperInfDom.INSTANCE.toDTOList(formatosADocente),
+                HttpStatus.OK
+        );
     }
 }
