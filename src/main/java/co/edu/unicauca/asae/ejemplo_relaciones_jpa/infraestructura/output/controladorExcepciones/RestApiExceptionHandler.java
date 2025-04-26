@@ -1,11 +1,12 @@
 package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones;
 
-import co.edu.unicauca.asae.cleanarquitecture.infraestructura.output.controladorExcepciones.estructuraExcepciones.CodigoError;
-import co.edu.unicauca.asae.cleanarquitecture.infraestructura.output.controladorExcepciones.estructuraExcepciones.Error;
-import co.edu.unicauca.asae.cleanarquitecture.infraestructura.output.controladorExcepciones.estructuraExcepciones.ErrorUtils;
-import co.edu.unicauca.asae.cleanarquitecture.infraestructura.output.controladorExcepciones.excepcionesPropias.EntidadNoExisteException;
-import co.edu.unicauca.asae.cleanarquitecture.infraestructura.output.controladorExcepciones.excepcionesPropias.EntidadYaExisteException;
-import co.edu.unicauca.asae.cleanarquitecture.infraestructura.output.controladorExcepciones.excepcionesPropias.ReglaNegocioExcepcion;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.estructuraExcepciones.CodigoError;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.estructuraExcepciones.ErrorUtils;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.excepcionesPropias.EntidadNoExisteException;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.excepcionesPropias.EntidadYaExisteException;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.excepcionesPropias.ReglaNegocioExcepcion;
+import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.estructuraExcepciones.Error;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -26,6 +27,8 @@ public class RestApiExceptionHandler {
         @ExceptionHandler(Exception.class)
         public ResponseEntity<Error> handleGenericException(final HttpServletRequest req,
                         final Exception ex, final Locale locale) {
+                System.out.println(Arrays.toString(ex.getStackTrace()));
+                ex.printStackTrace();
                 final Error error = ErrorUtils
                                 .crearError(CodigoError.ERROR_GENERICO.getCodigo(),
                                                 CodigoError.ERROR_GENERICO.getLlaveMensaje(),

@@ -1,10 +1,13 @@
 package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.controladores;
 
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.aplicacion.input.GestionFormatoACUIntPort;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos.FormatoA;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.peticion.FormatoDTOPeticion;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.FormatoDTORespuesta;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.ObservacionesDTORespuesta;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.mappers.FormatoAMapperInfDom;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +21,16 @@ public class FormatoARestController {
 
     private final GestionFormatoACUIntPort objGestionFormatoACUIntPort;
 
-    //TODO: Crear formatoA
     @PostMapping
     public ResponseEntity<FormatoDTORespuesta> crearFormatoA(@RequestBody FormatoDTOPeticion formatoDTOPeticion) {
-        return ResponseEntity.ok().build();
+        FormatoA formatoACrear = FormatoAMapperInfDom.INSTANCE.toDomain(formatoDTOPeticion);
+        FormatoA formatoACreado = objGestionFormatoACUIntPort.crearFormatoA(formatoACrear);
+        System.out.println("FormatoA creado: " + formatoACreado);
+        System.out.println("FormatoA DTO: " + FormatoAMapperInfDom.INSTANCE.toDTO(formatoACreado));
+        return new ResponseEntity<>(
+                FormatoAMapperInfDom.INSTANCE.toDTO(formatoACreado),
+                HttpStatus.CREATED
+        );
     }
 
     //TODO: Listar observaciones de un formatoA. se necesita devolver la info del formato A
@@ -33,6 +42,7 @@ public class FormatoARestController {
     //TODO: Consultar por docente
     @GetMapping("/docente/{idDocente}")
     public ResponseEntity<List<FormatoDTORespuesta>> consultarFormatosADocente(@RequestParam Integer idDocente) {
+
         return ResponseEntity.ok().build();
     }
 

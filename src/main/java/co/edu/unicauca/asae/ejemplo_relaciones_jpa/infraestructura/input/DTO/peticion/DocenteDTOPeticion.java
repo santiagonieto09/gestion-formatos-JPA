@@ -1,9 +1,9 @@
-package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta;
+package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.peticion;
 
 import lombok.Data;
 
 @Data
-public class DocenteDTORespuesta {
+public class DocenteDTOPeticion {
     private Integer idDocente;
     private String nombreDocente;
     private String apellidosDocente;

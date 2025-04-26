@@ -19,8 +19,7 @@ import java.util.List;
 public class FormatoDTOPeticion {
     String tipo; //PP, TI
     String titulo;
-    String nombreDirector;
-    Integer idDocente;
+    DocenteDTOPeticion docente;
     String objetivoGeneral;
     List<String> objetivosEspecificos;
 }

@@ -39,7 +39,7 @@ public class EvaluacionEntity {
     @JoinColumn(name = "idFormatoA", nullable = false)
     private FormatoAEntity formatoAEntity;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "evaluacion")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "evaluacionEntity")
     private List<ObservacionEntity> listaObservaciones;
     
 }

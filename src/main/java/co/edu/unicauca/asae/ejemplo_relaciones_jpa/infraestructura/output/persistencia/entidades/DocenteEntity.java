@@ -10,16 +10,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Table(name = "Docentes")
 public class DocenteEntity {
     @Id
@@ -34,10 +32,10 @@ public class DocenteEntity {
     @Column(unique = true, nullable = false, length = 100)
     private String correo;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docente")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docenteEntity")
     private List<FormatoAEntity> listaFormatosA;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docente")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docenteEntity")
     private List<HistoricoEntity> listaHistoricoEntities;
 
 }

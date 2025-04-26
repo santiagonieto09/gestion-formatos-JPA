@@ -15,11 +15,9 @@ public class FormatoDTORespuesta {
     Integer idFormatoA;
     String tipo; //PP, TI
     String titulo;
-    String descripcion;
     String objetivoGeneral;
     List<String> objetivosEspecificos;
-    Date fechaCreacion;
-    EstadoEnum estado;
+    EstadoDTO estado;
     DocenteDTORespuesta docente;
     List<EvaluacionDTORespuesta> evaluaciones;
 }

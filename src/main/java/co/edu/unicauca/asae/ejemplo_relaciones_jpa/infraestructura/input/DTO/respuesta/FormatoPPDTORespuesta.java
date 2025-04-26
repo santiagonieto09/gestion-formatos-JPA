@@ -4,13 +4,15 @@
  */
 package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class FormatoPPDTORespuesta extends FormatoDTORespuesta{
     String nombreAsesor;
     String nombreEstudiante1;

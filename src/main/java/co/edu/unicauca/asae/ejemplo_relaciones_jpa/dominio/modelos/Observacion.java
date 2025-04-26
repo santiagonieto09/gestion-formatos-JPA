@@ -1,12 +1,14 @@
-package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta;
+package co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class ObservacionesDTORespuesta {
+public class Observacion {
     private Integer idObservacion;
     private String observacion;
     private Date fechaRegistro;

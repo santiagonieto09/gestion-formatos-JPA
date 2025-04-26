@@ -3,7 +3,9 @@ package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.forma
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.aplicacion.output.FormateadorResultadosIntPort;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.excepcionesPropias.EntidadYaExisteException;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.excepcionesPropias.ReglaNegocioExcepcion;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FormateadorResultadosImplAdapter implements FormateadorResultadosIntPort {
 
     @Override

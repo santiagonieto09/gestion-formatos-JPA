@@ -29,7 +29,7 @@ public class RolEntity {
     @Column(name= "rol_asignado",nullable = false, length = 100)
     private String rolAsignado;
 
-     @OneToMany(fetch = FetchType.EAGER, mappedBy = "rol")
+     @OneToMany(fetch = FetchType.EAGER, mappedBy = "rolEntity")
     private List<HistoricoEntity> listaHistoricoEntities;
 
 }
