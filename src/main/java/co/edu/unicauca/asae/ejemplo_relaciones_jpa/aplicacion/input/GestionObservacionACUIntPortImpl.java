@@ -5,6 +5,7 @@ import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.pet
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.ObservacionesDTORespuesta;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -14,5 +15,10 @@ public class GestionObservacionACUIntPortImpl implements GestionObservacionACUIn
     @Override
     public ObservacionesDTORespuesta crearObservacion(ObservacionDTOPeticion observacionDTOPeticion) {
         return gestionObservacionGatewayIntPort.crearObservacion(observacionDTOPeticion);
+    }
+
+    @Override
+    public List<ObservacionesDTORespuesta> listarObservaciones(Integer idFormatoA) {
+        return gestionObservacionGatewayIntPort.listarObservaciones(idFormatoA);
     }
 }

@@ -5,13 +5,17 @@ import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.pet
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.ObservacionesDTORespuesta;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.EvaluacionEntity;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.ObservacionEntity;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.FormatoAEntity;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.EvaluacionesRepository;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.ObservacionesRepository;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.repositorios.FormatosARepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,28 +28,24 @@ public class GestionObservacionGatewayImplAdapter implements GestionObservacionG
     @Override
     @Transactional
     public ObservacionesDTORespuesta crearObservacion(ObservacionDTOPeticion observacionDTOPeticion) {
-        // Buscar la ultima evaluacion del formato A
         Long idUltimaEvaluacion = formatosARepository.buscarIdUltimaEvaluacionPorFormato(Long.valueOf(observacionDTOPeticion.getIdFormatoA()));
         if (idUltimaEvaluacion == null) {
-            throw new RuntimeException("No se encontró evaluación para el formato A");
+            throw new RuntimeException("No se encontro evaluacion para el formato A");
         }
         Optional<EvaluacionEntity> evaluacionOpt = evaluacionesRepository.findById(idUltimaEvaluacion.intValue());
         if (!evaluacionOpt.isPresent()) {
-            throw new RuntimeException("No se encontró la evaluación asociada");
+            throw new RuntimeException("No se encontro la evaluacion asociada");
         }
         EvaluacionEntity evaluacionEntity = evaluacionOpt.get();
 
-        //Crear la observacion
         ObservacionEntity observacionEntity = new ObservacionEntity();
         observacionEntity.setObservacion(observacionDTOPeticion.getObservacion());
         observacionEntity.setFechaRegistro(new Date());
         observacionEntity.setIdsDocentes(observacionDTOPeticion.getIdDocentes());
         observacionEntity.setEvaluacionEntity(evaluacionEntity);
 
-        //Guardar la observacion
         ObservacionEntity saved = observacionesRepository.save(observacionEntity);
 
-        //Retornar respuesta
         ObservacionesDTORespuesta respuesta = new ObservacionesDTORespuesta();
         respuesta.setIdObservacion(saved.getIdObservacion());
         respuesta.setObservacion(saved.getObservacion());
@@ -53,5 +53,25 @@ public class GestionObservacionGatewayImplAdapter implements GestionObservacionG
         respuesta.setIdDocentes(saved.getIdsDocentes());
         respuesta.setIdEvaluacion(saved.getEvaluacionEntity().getIdEvaluacion());
         return respuesta;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ObservacionesDTORespuesta> listarObservaciones(Integer idFormatoA) {
+        FormatoAEntity formato = formatosARepository.findById(idFormatoA)
+            .orElseThrow(() -> new RuntimeException("Formato A no existe"));
+        List<ObservacionesDTORespuesta> resultado = new ArrayList<>();
+        for (EvaluacionEntity ev : formato.getListaEvaluaciones()) {
+            for (ObservacionEntity obs : ev.getListaObservaciones()) {
+                ObservacionesDTORespuesta dto = new ObservacionesDTORespuesta();
+                dto.setIdObservacion(obs.getIdObservacion());
+                dto.setObservacion(obs.getObservacion());
+                dto.setFechaRegistro(obs.getFechaRegistro());
+                dto.setIdsDocentes(obs.getIdsDocentes());
+                dto.setIdEvaluacion(ev.getIdEvaluacion());
+                resultado.add(dto);
+            }
+        }
+        return resultado;
     }
 }

@@ -1,6 +1,7 @@
 package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.controladores;
 
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.aplicacion.input.GestionFormatoACUIntPort;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.aplicacion.input.GestionObservacionACUIntPort;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos.FormatoA;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.peticion.FormatoDTOPeticion;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.FormatoDTORespuesta;
@@ -21,6 +22,7 @@ import java.util.List;
 public class FormatoARestController {
 
     private final GestionFormatoACUIntPort objGestionFormatoACUIntPort;
+    private final GestionObservacionACUIntPort gestionObservacionACUIntPort;
 
     @PostMapping
     public ResponseEntity<FormatoDTORespuesta> crearFormatoA(@RequestBody FormatoDTOPeticion formatoDTOPeticion) {
@@ -32,10 +34,10 @@ public class FormatoARestController {
         );
     }
 
-    //TODO: Listar observaciones de un formatoA. se necesita devolver la info del formato A
     @GetMapping("/{idFormatoA}/observaciones")
-    public ResponseEntity<ObservacionesDTORespuesta> listarObservacionesFormatoA(@RequestParam Integer idFormatoA) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<ObservacionesDTORespuesta>> listarObservacionesFormatoA(@PathVariable Integer idFormatoA) {
+        List<ObservacionesDTORespuesta> lista = gestionObservacionACUIntPort.listarObservaciones(idFormatoA);
+        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/docente/{idDocente}")
