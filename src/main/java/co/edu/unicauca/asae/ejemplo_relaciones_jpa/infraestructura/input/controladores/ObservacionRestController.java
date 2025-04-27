@@ -14,9 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/observacion")
 public class ObservacionRestController {
-    //TODO: Crear observacion
+    private final co.edu.unicauca.asae.ejemplo_relaciones_jpa.aplicacion.input.GestionObservacionACUIntPort gestionObservacionACUIntPort;
+
     @PostMapping
     public ResponseEntity<?> crearObservacion(@RequestBody ObservacionDTOPeticion observacionDTOPeticion) {
-        return ResponseEntity.ok().build();
+        var respuesta = gestionObservacionACUIntPort.crearObservacion(observacionDTOPeticion);
+        return ResponseEntity.ok(respuesta);
     }
 }

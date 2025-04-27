@@ -34,9 +34,9 @@ public interface FormatosARepository extends JpaRepository<FormatoAEntity, Integ
             @Param("fechaInicio") Date fechaInicio,
             @Param("fechaFin") Date fechaFin);
 
-    @Query(value = "SELECT e.id FROM evaluaciones e " +
-            "WHERE e.formato_id = :idFormato " +
-            "ORDER BY e.fecha_evaluacion DESC " +
+    @Query(value = "SELECT e.idEvaluacion FROM evaluaciones e " +
+            "WHERE e.idFormatoA = :idFormato " +
+            "ORDER BY e.fecha_registro_concepto DESC " +
             "LIMIT 1", nativeQuery = true)
     Long buscarIdUltimaEvaluacionPorFormato(@Param("idFormato") Long idFormato);
 

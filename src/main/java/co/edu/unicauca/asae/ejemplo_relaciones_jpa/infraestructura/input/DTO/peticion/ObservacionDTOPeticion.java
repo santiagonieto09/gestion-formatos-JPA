@@ -2,10 +2,11 @@ package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.pe
 
 import java.util.List;
 
-public class ObservacionDTOPeticion {
-    //Atributos de la observacion
+import lombok.Data;
 
-    //Parametros para crear la observacion
-    List<Integer> idDocentes;
-    Integer idFormatoA;
+@Data
+public class ObservacionDTOPeticion {
+    private String observacion;
+    private List<Integer> idDocentes;
+    private Integer idFormatoA;
 }

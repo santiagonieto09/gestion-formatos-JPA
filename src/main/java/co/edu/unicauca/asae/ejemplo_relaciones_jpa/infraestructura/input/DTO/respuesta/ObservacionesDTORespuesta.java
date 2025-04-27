@@ -11,4 +11,12 @@ public class ObservacionesDTORespuesta {
     private String observacion;
     private Date fechaRegistro;
     private List<Integer> idsDocentes;
+    private Integer idEvaluacion;
+  
+    public void setIdEvaluacion(Integer idEvaluacion) {
+        this.idEvaluacion = idEvaluacion;
+    }
+    public void setIdDocentes(List<Integer> idsDocentes) {
+        this.idsDocentes = idsDocentes;
+    }
 }
