@@ -11,12 +11,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
 @RestController
+@Validated
 @AllArgsConstructor
 @RequestMapping("/api/formatoA")
 public class FormatoARestController {
@@ -35,7 +38,10 @@ public class FormatoARestController {
     }
 
     @GetMapping("/{idFormatoA}/observaciones")
-    public ResponseEntity<List<ObservacionesDTORespuesta>> listarObservacionesFormatoA(@PathVariable Integer idFormatoA) {
+    public ResponseEntity<List<ObservacionesDTORespuesta>> listarObservacionesFormatoA(
+        @PathVariable("idFormatoA")
+        @NotNull(message = "idFormatoA no puede ser null")
+        @Min(value = 1, message = "idFormatoA debe ser >= 1") Integer idFormatoA) {
         List<ObservacionesDTORespuesta> lista = gestionObservacionACUIntPort.listarObservaciones(idFormatoA);
         return ResponseEntity.ok(lista);
     }
