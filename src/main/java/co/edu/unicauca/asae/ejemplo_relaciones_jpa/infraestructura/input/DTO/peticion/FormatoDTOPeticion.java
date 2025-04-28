@@ -7,6 +7,7 @@ package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.pe
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.validaciones.ObjetivoInfinitivo;
 
 import java.util.List;
 
@@ -21,5 +22,6 @@ public class FormatoDTOPeticion {
     String titulo;
     DocenteDTOPeticion docente;
     String objetivoGeneral;
+    @ObjetivoInfinitivo(message = "objetivo.infinitivo")
     List<String> objetivosEspecificos;
 }

@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class FormatoARestController {
     private final GestionObservacionACUIntPort gestionObservacionACUIntPort;
 
     @PostMapping
-    public ResponseEntity<FormatoDTORespuesta> crearFormatoA(@RequestBody FormatoDTOPeticion formatoDTOPeticion) {
+    public ResponseEntity<FormatoDTORespuesta> crearFormatoA(@Valid @RequestBody FormatoDTOPeticion formatoDTOPeticion) {
         FormatoA formatoACrear = FormatoAMapperInfDom.INSTANCE.toDomain(formatoDTOPeticion);
         FormatoA formatoACreado = objGestionFormatoACUIntPort.crearFormatoA(formatoACrear);
         return new ResponseEntity<>(
