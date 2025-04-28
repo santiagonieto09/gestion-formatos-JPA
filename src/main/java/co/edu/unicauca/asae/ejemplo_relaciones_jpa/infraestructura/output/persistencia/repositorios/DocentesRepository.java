@@ -19,8 +19,7 @@ public interface DocentesRepository extends JpaRepository<DocenteEntity, Integer
 
     @Query("SELECT d FROM DocenteEntity d " +
             "JOIN d.listaHistoricoEntities h " +
-            "JOIN h.rolEntity r " +
-            "WHERE r.rolAsignado = :rolComite")
-    List<DocenteEntity> buscarMiembrosComite(@Param("rolComite") String rolComite);
+            "WHERE h.activo = true ")
+    List<DocenteEntity> buscarMiembrosComite();
 
 } 

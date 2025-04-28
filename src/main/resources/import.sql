@@ -18,7 +18,7 @@ INSERT INTO `Historicos` (`idHistoricos`, `idDocente`, `idRol`, `activo`, `fecha
 
 INSERT INTO `Historicos` (`idHistoricos`, `idDocente`, `idRol`, `activo`, `fechaInicio`, `fechaFin`) VALUES (2, 2, 2, 1, '2023-01-01', NULL);
 
-INSERT INTO `Historicos` (`idHistoricos`, `idDocente`, `idRol`, `activo`, `fechaInicio`, `fechaFin`) VALUES (3, 3, 3, 1, '2023-01-01', NULL);
+INSERT INTO `Historicos` (`idHistoricos`, `idDocente`, `idRol`, `activo`, `fechaInicio`, `fechaFin`) VALUES (3, 3, 3, 2, '2023-01-01', '2024-01-01');
 
 -- FormatosA
 INSERT INTO `FormatosA` (`idFormatoA`, `objetivo_general`, `objetivos_especificos`, `titulo`, `idDocente`, `fecha_creacion`) VALUES (1, 'Desarrollar una aplicación web para la gestión de formatos de propuestas de trabajo de grado', '1. Diseñar la arquitectura de la aplicación\n2. Implementar la interfaz de usuario\n3. Desarrollar la lógica de negocio', 'Sistema de Gestión de Formatos de Propuestas de Trabajo de Grado', 1, '2022-04-01 10:00:00');
