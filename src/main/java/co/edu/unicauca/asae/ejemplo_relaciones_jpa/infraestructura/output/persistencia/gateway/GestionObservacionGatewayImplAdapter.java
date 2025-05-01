@@ -3,6 +3,7 @@ package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persi
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.aplicacion.output.GestionObservacionGatewayIntPort;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.peticion.ObservacionDTOPeticion;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.ObservacionesDTORespuesta;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.ObservacionDTO;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.EvaluacionEntity;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.ObservacionEntity;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.FormatoAEntity;
@@ -47,12 +48,24 @@ public class GestionObservacionGatewayImplAdapter implements GestionObservacionG
 
         ObservacionEntity saved = observacionesRepository.save(observacionEntity);
 
+        // Crea el DTO de respuesta
         ObservacionesDTORespuesta respuesta = new ObservacionesDTORespuesta();
-        respuesta.setIdObservacion(saved.getIdObservacion());
-        respuesta.setObservacion(saved.getObservacion());
-        respuesta.setFechaRegistro(saved.getFechaRegistro());
-        respuesta.setIdDocentes(saved.getIdsDocentes());
+        
+        // Agrega informacion de evaluacion
         respuesta.setIdEvaluacion(saved.getEvaluacionEntity().getIdEvaluacion());
+        
+        // Crea y agrega el DTO de observacion
+        ObservacionDTO obsDTO = new ObservacionDTO();
+        obsDTO.setIdObservacion(saved.getIdObservacion());
+        obsDTO.setObservacion(saved.getObservacion());
+        obsDTO.setFechaRegistro(saved.getFechaRegistro());
+        obsDTO.setIdsDocentes(saved.getIdsDocentes());
+        
+        // Agrega la observacion a la lista
+        List<ObservacionDTO> observaciones = new ArrayList<>();
+        observaciones.add(obsDTO);
+        respuesta.setObservaciones(observaciones);
+        
         return respuesta;
     }
 
@@ -65,29 +78,33 @@ public class GestionObservacionGatewayImplAdapter implements GestionObservacionG
         List<ObservacionesDTORespuesta> resultado = new ArrayList<>();
 
         for (EvaluacionEntity ev : formato.getListaEvaluaciones()) {
+            // Crea un solo DTO para cada evaluacion
+            ObservacionesDTORespuesta dto = new ObservacionesDTORespuesta();
+            
+            // Agrega informacion del formato A
+            dto.setIdFormatoA(formato.getIdFormatoA());
+            dto.setTituloFormatoA(formato.getTitulo());
+            dto.setEstadoFormatoA(formato.getEstadoEntity().getEstadoActual());
+
+            // Agrega informacion de la evaluacion
+            dto.setIdEvaluacion(ev.getIdEvaluacion());
+            dto.setConceptoEvaluacion(ev.getConcepto());
+            dto.setFechaRegistroConcepto(ev.getFechaRegistroConcepto());
+            dto.setNombreCoordinador(ev.getNombreCoordinador());
+
+            // Crea lista de observaciones
+            List<ObservacionDTO> observaciones = new ArrayList<>();
             for (ObservacionEntity obs : ev.getListaObservaciones()) {
-
-                ObservacionesDTORespuesta dto = new ObservacionesDTORespuesta();
-
-                // Agregar informacion Formato A
-                dto.setIdFormatoA(formato.getIdFormatoA());
-                dto.setTituloFormatoA(formato.getTitulo());
-                dto.setEstadoFormatoA(formato.getEstadoEntity().getEstadoActual());
-
-                // Agregar informacion Evaluacion
-                dto.setConceptoEvaluacion(ev.getConcepto());
-                dto.setFechaRegistroConcepto(ev.getFechaRegistroConcepto());
-                dto.setNombreCoordinador(ev.getNombreCoordinador());
-
-                //Agregar informacion de Observaciones
-                dto.setIdObservacion(obs.getIdObservacion());
-                dto.setObservacion(obs.getObservacion());
-                dto.setFechaRegistro(obs.getFechaRegistro());
-                dto.setIdsDocentes(obs.getIdsDocentes());
-                dto.setIdEvaluacion(ev.getIdEvaluacion());                
-
-                resultado.add(dto);
+                ObservacionDTO obsDTO = new ObservacionDTO();
+                obsDTO.setIdObservacion(obs.getIdObservacion());
+                obsDTO.setObservacion(obs.getObservacion());
+                obsDTO.setFechaRegistro(obs.getFechaRegistro());
+                obsDTO.setIdsDocentes(obs.getIdsDocentes());
+                observaciones.add(obsDTO);
             }
+            dto.setObservaciones(observaciones);
+            
+            resultado.add(dto);
         }
         return resultado;
     }

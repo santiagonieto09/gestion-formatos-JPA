@@ -20,18 +20,6 @@ public class ObservacionesDTORespuesta {
     private Date fechaRegistroConcepto;
     private String nombreCoordinador;
     
-    // Datos de la Observacion
-    private Integer idObservacion;
-    private String observacion;
-    private Date fechaRegistro;
-    
-    // Datos de los Docentes asociados 
-    private List<Integer> idsDocentes;
-  
-    public void setIdEvaluacion(Integer idEvaluacion) {
-        this.idEvaluacion = idEvaluacion;
-    }
-    public void setIdDocentes(List<Integer> idsDocentes) {
-        this.idsDocentes = idsDocentes;
-    }
+    // Lista de observaciones
+    private List<ObservacionDTO> observaciones;
 }

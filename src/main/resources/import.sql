@@ -1,3 +1,15 @@
+-- Eliminar datos existentes 
+DELETE FROM `observacion_docentes`;
+DELETE FROM `Observaciones`;
+DELETE FROM `Evaluaciones`;
+DELETE FROM `FormatosPPA`;
+DELETE FROM `FormatosTIA`;
+DELETE FROM `Estados`;
+DELETE FROM `FormatosA`;
+DELETE FROM `Historicos`;
+DELETE FROM `Roles`;
+DELETE FROM `Docentes`;
+
 -- Docentes
 INSERT INTO `Docentes` (`idDocente`, `nombre_docente`, `apellidos_docente`, `nombre_grupo`, `correo`) VALUES (1, 'Juan', 'Perez', 'GIDATI', 'juan.perez@unicauca.edu.co');
 
@@ -36,7 +48,11 @@ INSERT INTO `Observaciones` (`idObservacion`, `observacion`, `fecha_registro_obs
 
 INSERT INTO `Observaciones` (`idObservacion`, `observacion`, `fecha_registro_observacion`, `idEvaluacion`) VALUES (2, 'Agregar mas detalles sobre la metodologia a utilizar', '2023-04-16', 1);
 
+INSERT INTO `Observaciones` (`idObservacion`, `observacion`, `fecha_registro_observacion`, `idEvaluacion`) VALUES (3, 'Incluir un cronograma detallado de actividades', '2023-04-16', 1);
+
 -- Observacion_Docentes
 INSERT INTO `observacion_docentes` (`idObservacion`, `idDocente`) VALUES (1, 2);
 INSERT INTO `observacion_docentes` (`idObservacion`, `idDocente`) VALUES (1, 3);
 INSERT INTO `observacion_docentes` (`idObservacion`, `idDocente`) VALUES (2, 2);
+INSERT INTO `observacion_docentes` (`idObservacion`, `idDocente`) VALUES (3, 1);
+INSERT INTO `observacion_docentes` (`idObservacion`, `idDocente`) VALUES (3, 2);
