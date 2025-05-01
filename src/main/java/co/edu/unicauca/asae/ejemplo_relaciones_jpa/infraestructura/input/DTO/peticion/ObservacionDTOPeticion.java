@@ -9,11 +9,11 @@ import lombok.Data;
 
 @Data
 public class ObservacionDTOPeticion {
-    @NotBlank(message = "El texto de la observacion es obligatorio")
+    @NotBlank(message = "{observacion.empty}")
     private String observacion;
-    @NotEmpty(message = "Debe haber al menos un docente")
-    private List<@Min(value = 1, message = "idDocente debe ser >=1") Integer> idDocentes;
-    @NotNull(message = "El idFormatoA es obligatorio")
-    @Min(value = 1, message = "idFormatoA debe ser >=1")
+    @NotEmpty(message = "{observacion.idDocentes.empty}")
+    private List<@Min(value = 1, message = "{observacion.idDocentes.invalid}") Integer> idDocentes;
+    @NotNull(message = "{observacion.idFormatoA.empty}")
+    @Min(value = 1, message = "{observacion.idFormatoA.invalid}")
     private Integer idFormatoA;
 }

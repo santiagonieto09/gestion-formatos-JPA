@@ -32,7 +32,6 @@ public class DocenteRestController {
         );
     }
 
-    //TODO: Listar miembros del comite
     @GetMapping("/comite")
     public ResponseEntity<List<DocenteDTORespuesta>> listarMiembrosComite() {
         List<Docente> docentes = gestionDocenteACUIntPort.listarMiembrosComite();

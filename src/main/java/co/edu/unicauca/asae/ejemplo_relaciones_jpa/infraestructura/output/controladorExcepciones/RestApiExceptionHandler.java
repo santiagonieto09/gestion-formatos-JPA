@@ -6,7 +6,7 @@ import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.contro
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.excepcionesPropias.EntidadYaExisteException;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.excepcionesPropias.ReglaNegocioExcepcion;
 import jakarta.servlet.http.HttpServletRequest;
-import org.hibernate.exception.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.estructuraExcepciones.Error;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -24,11 +23,26 @@ import java.util.Map;
 @ControllerAdvice
 public class RestApiExceptionHandler {
 
+        @ResponseStatus(HttpStatus.BAD_REQUEST)
+        @ExceptionHandler(ConstraintViolationException.class)
+        public ResponseEntity<Error> handleConstraintViolationException(HttpServletRequest req, ConstraintViolationException ex) {
+                String mensajeLimpio = ex.getConstraintViolations()
+                        .stream()
+                        .map(violation -> violation.getMessage()) // Solo el mensaje sin el path
+                        .reduce((msg1, msg2) -> msg1 + "; " + msg2) // Unifica si hay más de uno
+                        .orElse("Violación de restricciones de validación.");
+
+                final Error error = ErrorUtils
+                        .crearError(CodigoError.VIOLACION_CONSTRAINT.getCodigo(), mensajeLimpio, HttpStatus.BAD_REQUEST.value())
+                        .setUrl(req.getRequestURL().toString())
+                        .setMetodo(req.getMethod());
+
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
         @ExceptionHandler(Exception.class)
         public ResponseEntity<Error> handleGenericException(final HttpServletRequest req,
                         final Exception ex, final Locale locale) {
-                System.out.println(Arrays.toString(ex.getStackTrace()));
-                ex.printStackTrace();
                 final Error error = ErrorUtils
                                 .crearError(CodigoError.ERROR_GENERICO.getCodigo(),
                                                 CodigoError.ERROR_GENERICO.getLlaveMensaje(),
@@ -74,7 +88,7 @@ public class RestApiExceptionHandler {
 
         @ExceptionHandler(MethodArgumentNotValidException.class)
         public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-                System.out.println("Retornando respuesta con los errores identificados");
+                System.out.println("Retornando respuesta con los errores identificados...");
                 Map<String, String> errores = new HashMap<>();
                 ex.getBindingResult().getAllErrors().forEach((error) -> {
                         String campo = ((FieldError) error).getField();
@@ -85,10 +99,5 @@ public class RestApiExceptionHandler {
                 return new ResponseEntity<Map<String, String>>(errores, HttpStatus.BAD_REQUEST);
         }
 
-        @ResponseStatus(HttpStatus.BAD_REQUEST)
-        @ExceptionHandler(ConstraintViolationException.class)
-        ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
-                return new ResponseEntity<>(e.getMessage(),
-                                HttpStatus.BAD_REQUEST);
-        }
+
 }
