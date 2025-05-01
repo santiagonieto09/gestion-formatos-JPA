@@ -28,7 +28,8 @@ public class GestionObservacionGatewayImplAdapter implements GestionObservacionG
     @Override
     @Transactional
     public ObservacionesDTORespuesta crearObservacion(ObservacionDTOPeticion observacionDTOPeticion) {
-        Long idUltimaEvaluacion = formatosARepository.buscarIdUltimaEvaluacionPorFormato(Long.valueOf(observacionDTOPeticion.getIdFormatoA()));
+        Long idUltimaEvaluacion = formatosARepository
+                .buscarIdUltimaEvaluacionPorFormato(Long.valueOf(observacionDTOPeticion.getIdFormatoA()));
         if (idUltimaEvaluacion == null) {
             throw new RuntimeException("No se encontro evaluacion para el formato A");
         }
@@ -59,16 +60,32 @@ public class GestionObservacionGatewayImplAdapter implements GestionObservacionG
     @Transactional(readOnly = true)
     public List<ObservacionesDTORespuesta> listarObservaciones(Integer idFormatoA) {
         FormatoAEntity formato = formatosARepository.findById(idFormatoA)
-            .orElseThrow(() -> new RuntimeException("Formato A no existe"));
+                .orElseThrow(() -> new RuntimeException("Formato A no existe"));
+
         List<ObservacionesDTORespuesta> resultado = new ArrayList<>();
+
         for (EvaluacionEntity ev : formato.getListaEvaluaciones()) {
             for (ObservacionEntity obs : ev.getListaObservaciones()) {
+
                 ObservacionesDTORespuesta dto = new ObservacionesDTORespuesta();
+
+                // Agregar informacion Formato A
+                dto.setIdFormatoA(formato.getIdFormatoA());
+                dto.setTituloFormatoA(formato.getTitulo());
+                dto.setEstadoFormatoA(formato.getEstadoEntity().getEstadoActual());
+
+                // Agregar informacion Evaluacion
+                dto.setConceptoEvaluacion(ev.getConcepto());
+                dto.setFechaRegistroConcepto(ev.getFechaRegistroConcepto());
+                dto.setNombreCoordinador(ev.getNombreCoordinador());
+
+                //Agregar informacion de Observaciones
                 dto.setIdObservacion(obs.getIdObservacion());
                 dto.setObservacion(obs.getObservacion());
                 dto.setFechaRegistro(obs.getFechaRegistro());
                 dto.setIdsDocentes(obs.getIdsDocentes());
-                dto.setIdEvaluacion(ev.getIdEvaluacion());
+                dto.setIdEvaluacion(ev.getIdEvaluacion());                
+
                 resultado.add(dto);
             }
         }
