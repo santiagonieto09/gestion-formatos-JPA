@@ -1,0 +1,431 @@
+{
+	"info": {
+		"_postman_id": "0f101c1a-1afa-40e2-b4ae-364fd172e9b5",
+		"name": "ASAE - Taller JPA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30873478"
+	},
+	"item": [
+		{
+			"name": "Servicios REST",
+			"item": [
+				{
+					"name": "Guardar FormatoPP Exito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tipo\": \"PP\",\r\n  \"titulo\": \"Sistema de Gestión de Proyectos\",\r\n  \"docente\": {\r\n    \"idDocente\": 1,\r\n    \"nombreDocente\": \"Nombre del docente\",\r\n    \"apellidosDocente\": \"Apellidos del docente\",\r\n    \"nombreGrupo\": \"Nombre del grupo\",\r\n    \"correo\": \"correo@ejemplo.com\"\r\n  },\r\n  \"objetivoGeneral\": \"Desarrollar un sistema para la gestión eficiente de proyectos.\",\r\n  \"objetivosEspecificos\": [\r\n    \"Diseñar la arquitectura del sistema.\",\r\n    \"Implementar la interfaz de usuario.\",\r\n    \"Desarrollar la lógica de negocio.\"\r\n  ],\r\n  \"nombreAsesor\": \"María López\",\r\n  \"idEstudiante1\": \"104612345678\",\r\n  \"nombreEstudiante1\": \"Carlos Rodríguez\",\r\n  \"rutaCartaAceptacion\": \"/documentos/carta_aceptacion.pdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/formatoA",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Formatos idDocente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/formatoA/docente/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA",
+								"docente",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Formatos idDocente y Fechas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/formatoA/docente/1/rangoFechas?fechaInicio=01-01-2023&fechaFin=01-01-2026",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA",
+								"docente",
+								"1",
+								"rangoFechas"
+							],
+							"query": [
+								{
+									"key": "fechaInicio",
+									"value": "01-01-2023"
+								},
+								{
+									"key": "fechaFin",
+									"value": "01-01-2026"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar docentes por grupo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/docente?prefijoGrupo=G",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"docente"
+							],
+							"query": [
+								{
+									"key": "prefijoGrupo",
+									"value": "G"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar comite",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/docente/comite",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"docente",
+								"comite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Observaciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/formatoA/1/observaciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA",
+								"1",
+								"observaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Observacion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"observacion\": \"Mejorar la redaccion del tercer objetivo especifico\",\r\n  \"idDocentes\": [1, 2],\r\n  \"idFormatoA\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/observacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"observacion"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Validaciones Automaticas",
+			"item": [
+				{
+					"name": "Guardar FormatoPP Validaciones",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tipo\": \"PP\",\r\n  \"titulo\": \"\",\r\n  \"docente\": {\r\n    \"idDocente\": 1,\r\n    \"nombreDocente\": \"Nombre del docente\",\r\n    \"apellidosDocente\": \"Apellidos del docente\",\r\n    \"nombreGrupo\": \"Nombre del grupo\",\r\n    \"correo\": \"correo@ejemplo.com\"\r\n  },\r\n  \"objetivoGeneral\": \"\",\r\n  \"objetivosEspecificos\": [\r\n  ],\r\n  \"nombreAsesor\": \"\",\r\n  \"idEstudiante1\": \"\",\r\n  \"nombreEstudiante1\": \"\",\r\n  \"rutaCartaAceptacion\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/formatoA",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Guardar FormatoPP Docente Validaciones",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tipo\": \"PP\",\r\n  \"titulo\": \"Sistema de Gestión de Proyectos\",\r\n  \"docente\": {\r\n    \"idDocente\": -1,\r\n    \"nombreDocente\": \"\",\r\n    \"apellidosDocente\": \"\",\r\n    \"nombreGrupo\": \"\",\r\n    \"correo\": \"\"\r\n  },\r\n  \"objetivoGeneral\": \"Desarrollar un sistema para la gestión eficiente de proyectos.\",\r\n  \"objetivosEspecificos\": [\r\n    \"Diseñar la arquitectura del sistema.\",\r\n    \"Implementar la interfaz de usuario.\",\r\n    \"Desarrollar la lógica de negocio.\"\r\n  ],\r\n  \"nombreAsesor\": \"María López\",\r\n  \"idEstudiante1\": \"104612345678\",\r\n  \"nombreEstudiante1\": \"Carlos Rodríguez\",\r\n  \"rutaCartaAceptacion\": \"/documentos/carta_aceptacion.pdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/formatoA",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Observacion Validaciones",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"observacion\": \"\",\r\n  \"idDocentes\": [],\r\n  \"idFormatoA\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/observacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"observacion"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Validaciones Personalizadas",
+			"item": [
+				{
+					"name": "Guardar FormatoPP Validacion Personalizada",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tipo\": \"PP\",\r\n  \"titulo\": \"Sistema de Gestión de Proyectos\",\r\n  \"docente\": {\r\n    \"idDocente\": 1,\r\n    \"nombreDocente\": \"Nombre del docente\",\r\n    \"apellidosDocente\": \"Apellidos del docente\",\r\n    \"nombreGrupo\": \"Nombre del grupo\",\r\n    \"correo\": \"correo@ejemplo.com\"\r\n  },\r\n  \"objetivoGeneral\": \"Desarrolla un sistema para la gestión eficiente de proyectos.\",\r\n  \"objetivosEspecificos\": [\r\n    \"Diseña la arquitectura del sistema.\",\r\n    \"Implementa la interfaz de usuario.\",\r\n    \"Desarrolla la lógica de negocio.\"\r\n  ],\r\n  \"nombreAsesor\": \"María López\",\r\n  \"idEstudiante1\": \"104612345678\",\r\n  \"nombreEstudiante1\": \"Carlos Rodríguez\",\r\n  \"rutaCartaAceptacion\": \"/documentos/carta_aceptacion.pdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/formatoA",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Validaciones Regla de Negocio",
+			"item": [
+				{
+					"name": "Guardar FormatoPP Exito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tipo\": \"PP\",\r\n  \"titulo\": \"Sistema de Gestión de Proyectos\",\r\n  \"docente\": {\r\n    \"idDocente\": 1,\r\n    \"nombreDocente\": \"Nombre del docente\",\r\n    \"apellidosDocente\": \"Apellidos del docente\",\r\n    \"nombreGrupo\": \"Nombre del grupo\",\r\n    \"correo\": \"correo@ejemplo.com\"\r\n  },\r\n  \"objetivoGeneral\": \"Desarrollar un sistema para la gestión eficiente de proyectos.\",\r\n  \"objetivosEspecificos\": [\r\n    \"Diseñar la arquitectura del sistema.\",\r\n    \"Implementar la interfaz de usuario.\",\r\n    \"Desarrollar la lógica de negocio.\"\r\n  ],\r\n  \"nombreAsesor\": \"María López\",\r\n  \"idEstudiante1\": \"104612345678\",\r\n  \"nombreEstudiante1\": \"Carlos Rodríguez\",\r\n  \"rutaCartaAceptacion\": \"/documentos/carta_aceptacion.pdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/formatoA",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Guardar FormatoPP Correo Duplicado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tipo\": \"PP\",\r\n  \"titulo\": \"Sistema de Gestión de Proyectos500145\",\r\n  \"docente\": {\r\n    \"idDocente\": 5,\r\n    \"nombreDocente\": \"Nombre del docente1\",\r\n    \"apellidosDocente\": \"Apellidos del docente1\",\r\n    \"nombreGrupo\": \"Nombre del grupo\",\r\n    \"correo\": \"maria.lopez@unicauca.edu.co\"\r\n  },\r\n  \"objetivoGeneral\": \"Desarrollar un sistema para la gestión eficiente de proyectos.\",\r\n  \"objetivosEspecificos\": [\r\n    \"Diseñar la arquitectura del sistema.\",\r\n    \"Implementar la interfaz de usuario.\",\r\n    \"Desarrollar la lógica de negocio.\"\r\n  ],\r\n  \"nombreAsesor\": \"María López\",\r\n  \"idEstudiante1\": \"104612345678\",\r\n  \"nombreEstudiante1\": \"Carlos Rodríguez\",\r\n  \"rutaCartaAceptacion\": \"/documentos/carta_aceptacion.pdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/formatoA",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Formato Existe/NoExiste",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/formatoA/25/observaciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA",
+								"25",
+								"observaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Docente Existe/NoExiste",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/formatoA/docente/100",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formatoA",
+								"docente",
+								"100"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

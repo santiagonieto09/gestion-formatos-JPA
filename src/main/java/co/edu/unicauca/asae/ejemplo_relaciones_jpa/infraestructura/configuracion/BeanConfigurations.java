@@ -30,8 +30,10 @@ public class BeanConfigurations {
 
     @Bean
     public GestionObservacionCUAdapter crearGestionObservacionCUInt(
-        GestionObservacionGatewayIntPort gestionarObservacionGatewayIntPort) {
-        return new GestionObservacionCUAdapter(gestionarObservacionGatewayIntPort);
+        GestionObservacionGatewayIntPort gestionarObservacionGatewayIntPort,
+        GestionFormatoAGatewayIntPort gestionarFormatoAGatewayIntPort,
+        FormateadorResultadosIntPort formateadorResultadosIntPort) {
+        return new GestionObservacionCUAdapter(gestionarObservacionGatewayIntPort, gestionarFormatoAGatewayIntPort, formateadorResultadosIntPort);
     }
 
 }

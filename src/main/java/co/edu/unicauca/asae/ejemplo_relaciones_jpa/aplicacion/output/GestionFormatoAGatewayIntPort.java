@@ -16,4 +16,8 @@ public interface GestionFormatoAGatewayIntPort {
     List<FormatoA> consultarFormatosADocente(Integer idDocente);
 
     List<FormatoA> consultarFormatosADocenteRangoFechas(Integer idDocente, Date fechaInicio, Date fechaFin);
+
+    public boolean existeDocenteConCorreo(String correo);
+
+    public Long buscarIdUltimaEvaluacionPorFormato(Long idFormatoA);
 }

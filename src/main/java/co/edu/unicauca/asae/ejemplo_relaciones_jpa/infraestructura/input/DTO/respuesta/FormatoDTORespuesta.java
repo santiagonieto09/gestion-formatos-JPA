@@ -19,5 +19,5 @@ public class FormatoDTORespuesta {
     List<String> objetivosEspecificos;
     EstadoDTO estado;
     DocenteDTORespuesta docente;
-    List<EvaluacionDTORespuesta> evaluaciones;
+    List<EvaluacionDTORespuesta> listaEvaluaciones;
 }

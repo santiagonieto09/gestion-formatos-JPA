@@ -30,15 +30,14 @@ public class GestionFormatoACUAdapter implements GestionFormatoACUIntPort {
             objFormateadorResultados.retornarRespuestaErrorEntidadExiste("Ya existe un formato A con el mismo título.");
         }
 
+        if(!objGestionDocenteGateway.existeDocentePorId(formatoA.getDocente().getIdDocente()) && objGestionFormatoAGateway.existeDocenteConCorreo(formatoA.getDocente().getCorreo())){
+            objFormateadorResultados.retornarRespuestaErrorReglaDeNegocio("Ya existe un docente con el mismo correo.");
+        }
+
         formatoA.inicializarFormato();
         formatoACreado = objGestionFormatoAGateway.crearFormatoA(formatoA);
 
         return formatoACreado;
-    }
-
-    @Override
-    public FormatoA listarObservacionesFormatoA(Integer idFormatoA) {
-        return null;
     }
 
     @Override

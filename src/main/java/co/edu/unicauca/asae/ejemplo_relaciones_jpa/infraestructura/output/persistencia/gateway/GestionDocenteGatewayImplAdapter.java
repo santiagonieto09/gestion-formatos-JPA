@@ -31,6 +31,9 @@ public class GestionDocenteGatewayImplAdapter implements GestionDocenteGatewayIn
     @Override
     @Transactional(readOnly = true)
     public List<Docente> listarMiembrosComite() {
-        return DocenteMapper.INSTANCE.toDomainList(docenteRepository.buscarMiembrosComite());
+        System.out.println("Consultando miembros del comite");
+        List<DocenteEntity> docentesComite = docenteRepository.buscarMiembrosComite();
+        System.out.println(docentesComite.size() + " miembros encontrados");
+        return DocenteMapper.INSTANCE.toDomainList(docentesComite);
     }
 }

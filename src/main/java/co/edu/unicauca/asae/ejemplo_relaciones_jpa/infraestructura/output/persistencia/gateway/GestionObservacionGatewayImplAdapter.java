@@ -4,6 +4,7 @@ import co.edu.unicauca.asae.ejemplo_relaciones_jpa.aplicacion.output.GestionObse
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.peticion.ObservacionDTOPeticion;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.ObservacionesDTORespuesta;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.ObservacionDTO;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.excepcionesPropias.ReglaNegocioExcepcion;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.EvaluacionEntity;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.ObservacionEntity;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.FormatoAEntity;
@@ -28,16 +29,13 @@ public class GestionObservacionGatewayImplAdapter implements GestionObservacionG
 
     @Override
     @Transactional
-    public ObservacionesDTORespuesta crearObservacion(ObservacionDTOPeticion observacionDTOPeticion) {
-        Long idUltimaEvaluacion = formatosARepository
-                .buscarIdUltimaEvaluacionPorFormato(Long.valueOf(observacionDTOPeticion.getIdFormatoA()));
-        if (idUltimaEvaluacion == null) {
-            throw new RuntimeException("No se encontro evaluacion para el formato A");
-        }
+    public ObservacionesDTORespuesta crearObservacion(ObservacionDTOPeticion observacionDTOPeticion, Long idUltimaEvaluacion) {
         Optional<EvaluacionEntity> evaluacionOpt = evaluacionesRepository.findById(idUltimaEvaluacion.intValue());
-        if (!evaluacionOpt.isPresent()) {
+
+        if (evaluacionOpt.isEmpty()) {
             throw new RuntimeException("No se encontro la evaluacion asociada");
         }
+
         EvaluacionEntity evaluacionEntity = evaluacionOpt.get();
 
         ObservacionEntity observacionEntity = new ObservacionEntity();
@@ -72,8 +70,10 @@ public class GestionObservacionGatewayImplAdapter implements GestionObservacionG
     @Override
     @Transactional(readOnly = true)
     public List<ObservacionesDTORespuesta> listarObservaciones(Integer idFormatoA) {
-        FormatoAEntity formato = formatosARepository.findById(idFormatoA)
-                .orElseThrow(() -> new RuntimeException("Formato A no existe"));
+
+        System.out.println("Listando observaciones para el formato A con ID: " + idFormatoA);
+        FormatoAEntity formato = formatosARepository.findById(idFormatoA).get();
+        System.out.println("Formato A con ID " + idFormatoA + " encontrado.");
 
         List<ObservacionesDTORespuesta> resultado = new ArrayList<>();
 
@@ -106,6 +106,7 @@ public class GestionObservacionGatewayImplAdapter implements GestionObservacionG
             
             resultado.add(dto);
         }
+        System.out.println("Se encontraron " + resultado.size() + " observaciones para el formato A con ID: " + idFormatoA);
         return resultado;
     }
 }

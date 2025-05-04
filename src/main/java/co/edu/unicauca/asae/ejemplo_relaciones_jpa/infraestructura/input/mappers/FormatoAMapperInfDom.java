@@ -1,16 +1,10 @@
 package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.mappers;
 
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos.Docente;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos.FormatoA;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos.FormatoPPA;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos.FormatoTIA;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos.*;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.peticion.FormatoDTOPeticion;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.peticion.FormatoPPDTOPeticion;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.peticion.FormatoTIDTOPeticion;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.DocenteDTORespuesta;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.FormatoDTORespuesta;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.FormatoPPDTORespuesta;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.FormatoTIDTORespuesta;
+import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.respuesta.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.SubclassMapping;
@@ -22,6 +16,9 @@ import java.util.List;
 @Mapper
 public interface FormatoAMapperInfDom {
     FormatoAMapperInfDom INSTANCE = Mappers.getMapper(FormatoAMapperInfDom.class);
+
+    EvaluacionDTORespuesta toEvaluacionDTO(Evaluacion evaluacion);
+    List<EvaluacionDTORespuesta> toEvaluacionDTOList(Collection<Evaluacion> evaluaciones);
 
     // Mapeo de Domain a DTO
     @SubclassMapping(source = FormatoPPA.class, target = FormatoPPDTORespuesta.class)

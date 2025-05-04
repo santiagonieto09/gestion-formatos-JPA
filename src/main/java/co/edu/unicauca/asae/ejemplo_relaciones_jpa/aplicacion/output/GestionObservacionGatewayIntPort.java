@@ -5,6 +5,6 @@ import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.input.DTO.res
 import java.util.List;
 
 public interface GestionObservacionGatewayIntPort {
-    ObservacionesDTORespuesta crearObservacion(ObservacionDTOPeticion observacionDTOPeticion);
+    ObservacionesDTORespuesta crearObservacion(ObservacionDTOPeticion observacionDTOPeticion,  Long idUltimaEvaluacion);
     List<ObservacionesDTORespuesta> listarObservaciones(Integer idFormatoA);
 }

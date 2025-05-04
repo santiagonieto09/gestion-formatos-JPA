@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface GestionFormatoACUIntPort {
     FormatoA crearFormatoA(FormatoA formatoA);
-    FormatoA listarObservacionesFormatoA(Integer idFormatoA);
     List<FormatoA> consultarFormatosADocente(Integer idDocente);
     List<FormatoA> consultarFormatosADocenteRangoFechas(Integer idDocente, Date fechaInicio, Date fechaFin);
 }

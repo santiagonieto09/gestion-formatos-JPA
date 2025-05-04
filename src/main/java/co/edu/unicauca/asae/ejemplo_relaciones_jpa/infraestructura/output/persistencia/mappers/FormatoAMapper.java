@@ -25,6 +25,9 @@ public interface FormatoAMapper {
     Docente toDomain(DocenteEntity docenteEntity);
     DocenteEntity toEntity(Docente docente);
 
+    Evaluacion toDomain(EvaluacionEntity evaluacionEntity);
+    EvaluacionEntity toEntity(Evaluacion evaluacion);
+
     Estado toDomain(EstadoEntity estadoEntity);
     EstadoEntity toEntity(Estado estado);
 

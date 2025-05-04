@@ -2,7 +2,6 @@ package co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persi
 
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.aplicacion.output.GestionFormatoAGatewayIntPort;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.dominio.modelos.FormatoA;
-import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.controladorExcepciones.excepcionesPropias.ReglaNegocioExcepcion;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.DocenteEntity;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.entidades.FormatoAEntity;
 import co.edu.unicauca.asae.ejemplo_relaciones_jpa.infraestructura.output.persistencia.mappers.FormatoAMapper;
@@ -47,11 +46,6 @@ public class GestionFormatoAGatewayImplAdapter implements GestionFormatoAGateway
         } else {
             System.out.println("El docente no existe en la base de datos. Creando docente...");
             formatoAEntity.getDocenteEntity().setIdDocente(null);
-
-            if(docentesRepository.existeDocenteConCorreo(formatoA.getDocente().getCorreo())) {
-                System.out.println("Este correo ya se encuentra registrad.");
-                throw new ReglaNegocioExcepcion("El correo ya se encuentra registrado.");
-            }
         }
 
         formatoAEntity.getEstadoEntity().setFormatoAEntity(formatoAEntity);
@@ -62,7 +56,10 @@ public class GestionFormatoAGatewayImplAdapter implements GestionFormatoAGateway
     @Override
     @Transactional(readOnly = true)
     public List<FormatoA> consultarFormatosADocente(Integer idDocente) {
-        return FormatoAMapper.INSTANCE.toDomainList(formatoARepository.findByDocenteEntityId(idDocente));
+        System.out.println("Consultando formatos A del docente con ID: " + idDocente);
+        List<FormatoAEntity> formatosA = formatoARepository.findByDocenteEntityId(idDocente);
+        System.out.println("Cantidad de formatos A encontrados: " + formatosA.size());
+        return FormatoAMapper.INSTANCE.toDomainList(formatosA);
     }
 
     @Override
@@ -70,5 +67,16 @@ public class GestionFormatoAGatewayImplAdapter implements GestionFormatoAGateway
     public List<FormatoA> consultarFormatosADocenteRangoFechas(Integer idDocente, Date fechaInicio, Date fechaFin) {
         return FormatoAMapper.INSTANCE.toDomainList(
                 formatoARepository.listarFormatosPorDocenteYFechas(idDocente, fechaInicio, fechaFin));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existeDocenteConCorreo(String correo) {
+        return docentesRepository.existeDocenteConCorreo(correo);
+    }
+
+    @Override
+    public Long buscarIdUltimaEvaluacionPorFormato(Long idFormatoA) {
+        return formatoARepository.buscarIdUltimaEvaluacionPorFormato(idFormatoA);
     }
 }
